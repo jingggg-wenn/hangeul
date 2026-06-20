@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>한국어Learn - Terminal</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%230e0e0e'/><rect x='1' y='1' width='30' height='30' rx='3' fill='none' stroke='%23c8f135' stroke-width='1.5'/><text x='16' y='22' text-anchor='middle' font-family='monospace' font-size='16' font-weight='700' fill='%23c8f135'>가</text></svg>" />
+<style>
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --bg: #0e0e0e;
+  --bg2: #141414;
+  --bg3: #1a1a1a;
+  --border: #252525;
+  --border2: #2e2e2e;
+  --text: #e8e8e8;
+  --text2: #888;
+  --text3: #555;
+  --accent: #c8f135;
+  --accent-dim: #8aaa20;
+  --rule-base: #e8e8e8;
+  --rule-change: #ff4d4d;
+  --rule-explain: #5ba8ff;
+  --rule-example: #4ecb71;
+  --sidebar-w: 220px;
+  --sidebar-collapsed-w: 52px;
+  --source-tag-color: #e87da5;
+  --source-tag-bg: rgba(232, 125, 165, 0.1);
+  --source-tag-border: rgba(232, 125, 165, 0.3);
+}
+.light {
+  --bg: #f4f4f4;
+  --bg2: #ebebeb;
+  --bg3: #e2e2e2;
+  --border: #d0d0d0;
+  --border2: #c0c0c0;
+  --text: #111;
+  --text2: #555;
+  --text3: #999;
+  --accent: #5a9e00;
+  --accent-dim: #3d6e00;
+  --rule-base: #111;
+  --rule-change: #cc2200;
+  --rule-explain: #0055cc;
+  --rule-example: #1a7a3a;
+  --source-tag-color: #c04878;
+  --source-tag-bg: rgba(192, 72, 120, 0.1);
+  --source-tag-border: rgba(192, 72, 120, 0.35);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; display: flex; flex-direction: column; height: 100vh; overflow: hidden; transition: background 0.2s, color 0.2s; }
+
+/* TOP BAR */
+.topbar {
+  display: flex; align-items: center; gap: 16px;
+  padding: 0 20px; height: 56px; border-bottom: 1px solid var(--border);
+  background: var(--bg); flex-shrink: 0; z-index: 20; position: relative;
+}
+.logo { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 16px; color: var(--accent); flex-shrink: 0; }
+.logo span { color: var(--text); }
+
+/* CENTERED SEARCH BAR */
+.topbar-search-wrap {
+  flex: 1; display: flex; align-items: center; justify-content: center; position: relative;
+}
+.topbar-search-inner {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--bg3); border: 1px solid var(--border2);
+  border-radius: 999px; padding: 7px 16px;
+  width: 100%; max-width: 480px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  cursor: text;
+}
+.topbar-search-inner:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 15%, transparent);
+}
+.topbar-search-icon { color: var(--text3); font-size: 13px; flex-shrink: 0; }
+.topbar-search-input {
+  flex: 1; background: transparent; border: none; outline: none;
+  font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--text); min-width: 0;
+}
+.topbar-search-input::placeholder { color: var(--text3); }
+.topbar-search-hint { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--text3); letter-spacing: 0.06em; flex-shrink: 0; }
+
+/* SEARCH DROPDOWN */
+.search-dropdown {
+  display: none; position: absolute; top: calc(100% + 8px);
+  left: 50%; transform: translateX(-50%);
+  width: 100%; max-width: 480px;
+  background: var(--bg2); border: 1px solid var(--border2); border-radius: 10px;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.5);
+  z-index: 200; overflow: hidden;
+}
+.search-dropdown.open { display: block; }
+.search-results { max-height: 380px; overflow-y: auto; }
+.search-empty { padding: 24px; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text3); }
+.search-cat-label {
+  padding: 10px 16px 4px; font-family: 'JetBrains Mono', monospace;
+  font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3);
+  border-top: 1px solid var(--border);
+}
+.search-cat-label:first-child { border-top: none; }
+.search-result-row {
+  padding: 10px 16px; cursor: pointer; display: flex; align-items: center; gap: 12px;
+  transition: background 0.1s;
+}
+.search-result-row:hover { background: var(--bg3); }
+.srr-tag {
+  font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--accent);
+  border: 1px solid var(--border2); padding: 1px 6px; border-radius: 2px; flex-shrink: 0;
+}
+.srr-title { font-size: 13px; font-weight: 600; color: var(--text); }
+.srr-snippet { font-size: 11px; color: var(--text3); margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 340px; }
+.srr-highlight { color: var(--accent); font-weight: 600; }
+
+/* TOPBAR RIGHT */
+.topbar-right { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+.mastery-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text3); letter-spacing: 0.08em; }
+.mastery-label strong { color: var(--accent); }
+.progress-track { width: 100px; height: 3px; background: var(--border2); border-radius: 2px; }
+.progress-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.4s; }
+.toggle-btn {
+  width: 32px; height: 32px; border: 1px solid var(--border2); background: var(--bg3);
+  border-radius: 5px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+  font-size: 14px; color: var(--text2); font-family: 'JetBrains Mono', monospace;
+  transition: border-color 0.15s;
+}
+.toggle-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+/* LAYOUT */
+.layout { display: flex; flex: 1; overflow: hidden; }
+
+/* SIDEBAR */
+.sidebar {
+  width: var(--sidebar-w); border-right: 1px solid var(--border); background: var(--bg2);
+  display: flex; flex-direction: column; flex-shrink: 0;
+  transition: width 0.22s cubic-bezier(0.4,0,0.2,1);
+  overflow: hidden;
+}
+.sidebar.collapsed { width: var(--sidebar-collapsed-w); }
+
+.sidebar-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 12px; border-bottom: 1px solid var(--border);
+  flex-shrink: 0; min-height: 44px;
+}
+.sidebar-header-label {
+  font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.14em;
+  color: var(--text3); text-transform: uppercase; white-space: nowrap;
+  transition: opacity 0.15s;
+}
+.sidebar.collapsed .sidebar-header-label { opacity: 0; }
+.sidebar-header-btns { display: flex; gap: 4px; flex-shrink: 0; }
+.sb-btn {
+  width: 24px; height: 24px; border: 1px solid var(--border2); background: var(--bg3);
+  border-radius: 4px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+  font-size: 11px; color: var(--text2); transition: border-color 0.15s, color 0.15s, background 0.15s;
+  flex-shrink: 0;
+}
+.sb-btn:hover { border-color: var(--accent); color: var(--accent); }
+.sb-btn.active { border-color: var(--accent); color: var(--accent); background: color-mix(in srgb, var(--accent) 10%, var(--bg)); }
+.sidebar.collapsed .sb-pin { display: none; }
+
+.sidebar-scroll { flex: 1; overflow-y: auto; overflow-x: hidden; }
+
+.sidebar-section-label {
+  padding: 16px 14px 6px;
+  font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.14em;
+  color: var(--text3); text-transform: uppercase; white-space: nowrap;
+  transition: opacity 0.15s;
+}
+.sidebar.collapsed .sidebar-section-label { opacity: 0; }
+
+.sidebar-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 11px 14px; cursor: pointer;
+  border-left: 2px solid transparent;
+  transition: background 0.12s, border-color 0.12s;
+  white-space: nowrap;
+}
+.sidebar.collapsed .sidebar-item { justify-content: center; padding: 11px 0; }
+.sidebar-item:hover { background: var(--bg3); }
+.sidebar-item.active { border-left-color: var(--accent); background: var(--bg3); }
+.sidebar.collapsed .sidebar-item.active { border-left-color: transparent; }
+.sidebar-glyph {
+  font-size: 17px; color: var(--text3); width: 26px; text-align: center;
+  font-weight: 700; line-height: 1; flex-shrink: 0;
+}
+.sidebar-item.active .sidebar-glyph { color: var(--accent); }
+.sidebar-text { overflow: hidden; transition: opacity 0.15s; min-width: 0; }
+.sidebar.collapsed .sidebar-text { opacity: 0; width: 0; }
+.sidebar-name { font-size: 13px; font-weight: 600; color: var(--text2); }
+.sidebar-item.active .sidebar-name { color: var(--text); }
+.sidebar-count { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text3); margin-top: 1px; }
+.sidebar-item.active .sidebar-count { color: var(--accent-dim); }
+.sidebar-divider { height: 1px; background: var(--border); margin: 6px 0; transition: opacity 0.15s; }
+.sidebar.collapsed .sidebar-divider { opacity: 0; }
+.progress-section { transition: opacity 0.15s; padding: 8px 14px 20px; }
+.sidebar.collapsed .progress-section { opacity: 0; pointer-events: none; }
+
+/* MAIN */
+.main { flex: 1; overflow-y: auto; display: flex; flex-direction: column; }
+.main-header {
+  padding: 24px 28px 16px; border-bottom: 1px solid var(--border);
+  display: flex; align-items: flex-end; justify-content: space-between; flex-shrink: 0;
+}
+.main-title { font-family: 'JetBrains Mono', monospace; font-size: 22px; font-weight: 700; color: var(--text); }
+.main-title span { color: var(--accent); }
+.main-subtitle { font-size: 12px; color: var(--text3); margin-top: 4px; }
+.main-actions { display: flex; gap: 8px; }
+.btn-add {
+  background: var(--accent); color: #0e0e0e; border: none; border-radius: 5px;
+  padding: 8px 16px; font-weight: 700; font-size: 12px; cursor: pointer;
+  font-family: 'Inter', sans-serif; transition: opacity 0.15s;
+}
+.btn-add:hover { opacity: 0.85; }
+
+/* CARD GRID */
+.card-grid {
+  padding: 24px 28px; display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 16px; align-content: start;
+}
+
+/* RULE CARD */
+.rule-card {
+  background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; overflow: hidden;
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s, transform 0.15s;
+}
+.rule-card:hover {
+  border-color: var(--accent); background: var(--bg3);
+  box-shadow: 0 0 0 1px var(--accent), 0 4px 24px rgba(200,241,53,0.07);
+  transform: translateY(-1px);
+}
+.rule-card:hover .card-tag { background: var(--accent); color: #0e0e0e; border-color: var(--accent); }
+.rule-card:hover .card-source-tag { opacity: 0.9; }
+.rule-card:hover .card-title-text { color: var(--accent); }
+.card-header {
+  padding: 14px 18px 12px; border-bottom: 1px solid var(--border);
+  display: flex; align-items: flex-start; justify-content: space-between;
+}
+.card-tag {
+  font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--accent); background: var(--bg3);
+  border: 1px solid var(--border2); padding: 2px 8px; border-radius: 3px;
+}
+.card-source-tag {
+  font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.06em;
+  color: var(--source-tag-color); background: var(--source-tag-bg);
+  border: 1px solid var(--source-tag-border); padding: 2px 8px; border-radius: 3px;
+  margin-left: 6px;
+}
+.card-tags-row { display: flex; align-items: center; flex-wrap: wrap; gap: 0; }
+.card-title-text { font-size: 14px; font-weight: 700; color: var(--text); margin-top: 6px; }
+.card-body { padding: 14px 18px; }
+
+/* RULE FORMULA */
+.formula {
+  background: var(--bg3); border-radius: 5px; padding: 10px 14px;
+  font-family: 'JetBrains Mono', monospace; font-size: 13px;
+  white-space: pre-line; line-height: 1.7; margin-bottom: 12px;
+}
+.f-base { color: var(--rule-base); font-weight: 600; }
+.f-strike {
+  position: relative; display: inline-block; color: var(--rule-base);
+}
+.f-strike::after {
+  content: ''; position: absolute;
+  left: -1px; right: -1px; top: 0; bottom: 0;
+  background: linear-gradient(
+    to bottom right,
+    transparent 47%, var(--rule-base) 47%,
+    var(--rule-base) 53%, transparent 53%
+  );
+  pointer-events: none;
+}
+
+/* EXPLANATION */
+.card-explain { font-size: 12px; color: var(--text2); line-height: 1.6; margin-bottom: 12px; }
+
+/* EXAMPLES */
+.examples-label {
+  font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--text3); margin-bottom: 6px;
+}
+.example-row {
+  font-family: 'JetBrains Mono', monospace; font-size: 12px;
+  color: var(--rule-example); padding: 3px 0;
+  display: flex; gap: 10px; align-items: baseline;
+}
+
+/* EXCEPTIONS */
+.exception-block {
+  margin-top: 12px; background: var(--bg); border: 1px solid var(--border);
+  border-left: 2px solid var(--rule-change); border-radius: 4px; padding: 8px 12px;
+}
+.exception-label {
+  font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--rule-change); margin-bottom: 4px;
+}
+.exception-text { font-size: 12px; color: var(--text2); line-height: 1.5; }
+
+/* TABLE CARD */
+.table-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+.table-card .card-header { padding: 14px 18px 12px; border-bottom: 1px solid var(--border); }
+.kr-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.kr-table th {
+  background: var(--bg3); font-family: 'JetBrains Mono', monospace;
+  font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--text3); padding: 8px 12px; text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+.kr-table td { padding: 9px 12px; border-bottom: 1px solid var(--border); font-size: 13px; color: var(--text); }
+.kr-table tr:last-child td { border-bottom: none; }
+.kr-table tr:hover td { background: var(--bg3); }
+.kr-table .kr-char { font-size: 18px; font-weight: 600; color: var(--accent); }
+.kr-table .kr-rom { color: var(--text2); font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+.kr-table .kr-note { color: var(--rule-explain); font-size: 11px; }
+
+/* ADD PANEL */
+.add-panel {
+  margin: 0 28px 28px; background: var(--bg2); border: 1px dashed var(--border2);
+  border-radius: 8px; padding: 20px;
+}
+.add-panel-title { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); margin-bottom: 14px; }
+.add-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.add-input {
+  flex: 1; min-width: 140px; background: var(--bg); border: 1px solid var(--border2);
+  border-radius: 5px; padding: 9px 12px; color: var(--text);
+  font-family: 'Inter', sans-serif; font-size: 12px; outline: none;
+  transition: border-color 0.15s;
+}
+.add-input:focus { border-color: var(--accent); }
+.add-input::placeholder { color: var(--text3); }
+select.add-input { cursor: pointer; }
+
+/* EMPTY STATE */
+.empty-state { padding: 48px 28px; text-align: center; color: var(--text3); }
+.empty-glyph { font-size: 48px; margin-bottom: 12px; }
+.empty-text { font-family: 'JetBrains Mono', monospace; font-size: 13px; }
+
+/* COLOR LEGEND */
+.legend {
+  display: flex; gap: 16px; align-items: center; flex-wrap: wrap;
+  padding: 10px 28px; border-top: 1px solid var(--border);
+  background: var(--bg2); flex-shrink: 0;
+}
+.legend-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--text3); }
+.legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+</style>
+
+<!-- Category data files — edit these to add/change content -->
+<script src="data/hangeul.js"></script>
+<script src="data/pronunciation.js"></script>
+<script src="data/grammar.js"></script>
+<script src="data/counting.js"></script>
+<script src="data/honorific.js"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo">한국어<span>Learn</span></div>
+
+  <div class="topbar-search-wrap">
+    <div class="topbar-search-inner">
+      <span class="topbar-search-icon">&#9906;</span>
+      <input class="topbar-search-input" id="searchInput" placeholder="Search cards..." autocomplete="off" />
+      <span class="topbar-search-hint">/ to focus</span>
+    </div>
+    <div class="search-dropdown" id="searchDropdown">
+      <div class="search-results" id="searchResults">
+        <div class="search-empty">Start typing to search across all categories.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="topbar-right">
+    <div class="mastery-label">MASTERY &nbsp;<strong id="masteryPct">0%</strong></div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+    <div class="toggle-btn" id="toggleBtn" title="Toggle light/dark">&#9680;</div>
+  </div>
+</div>
+
+<div class="layout">
+
+  <div class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <span class="sidebar-header-label">Categories</span>
+      <div class="sidebar-header-btns">
+        <div class="sb-btn sb-pin" id="pinBtn" title="Pin sidebar open" style="font-size:10px;">[*]</div>
+        <div class="sb-btn sb-collapse" id="collapseBtn" title="Collapse sidebar" style="font-size:10px;">&lt;&lt;</div>
+      </div>
+    </div>
+
+    <div class="sidebar-scroll">
+      <div class="sidebar-item active" data-cat="hangeul" onclick="switchCat(this)">
+        <div class="sidebar-glyph">가</div>
+        <div class="sidebar-text">
+          <div class="sidebar-name">Hangeul Alphabets</div>
+          <div class="sidebar-count" id="count-hangeul">0 rules</div>
+        </div>
+      </div>
+      <div class="sidebar-item" data-cat="pronunciation" onclick="switchCat(this)">
+        <div class="sidebar-glyph">발</div>
+        <div class="sidebar-text">
+          <div class="sidebar-name">Pronunciation</div>
+          <div class="sidebar-count" id="count-pronunciation">0 rules</div>
+        </div>
+      </div>
+      <div class="sidebar-item" data-cat="grammar" onclick="switchCat(this)">
+        <div class="sidebar-glyph">문</div>
+        <div class="sidebar-text">
+          <div class="sidebar-name">Grammar</div>
+          <div class="sidebar-count" id="count-grammar">0 rules</div>
+        </div>
+      </div>
+      <div class="sidebar-item" data-cat="counting" onclick="switchCat(this)">
+        <div class="sidebar-glyph">수</div>
+        <div class="sidebar-text">
+          <div class="sidebar-name">Counting &amp; Units</div>
+          <div class="sidebar-count" id="count-counting">0 rules</div>
+        </div>
+      </div>
+      <div class="sidebar-item" data-cat="honorific" onclick="switchCat(this)">
+        <div class="sidebar-glyph">존</div>
+        <div class="sidebar-text">
+          <div class="sidebar-name">Honorific Forms</div>
+          <div class="sidebar-count" id="count-honorific">0 rules</div>
+        </div>
+      </div>
+
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-section-label">Progress</div>
+      <div class="progress-section">
+        <div style="font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--text3); margin-bottom:6px;">
+          Total cards: <span id="totalCards" style="color:var(--accent)">0</span>
+        </div>
+        <div style="font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--text3);">
+          Streak: <span style="color:var(--accent)">-</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="main" id="main">
+    <div class="main-header">
+      <div>
+        <div class="main-title" id="mainTitle"><span>가나다</span> Hangeul Alphabets</div>
+        <div class="main-subtitle" id="mainSubtitle">consonants · vowels · syllable blocks</div>
+      </div>
+      <div class="main-actions">
+        <button class="btn-add" onclick="scrollToAdd()">+ Add card</button>
+      </div>
+    </div>
+
+    <div class="card-grid" id="cardGrid"></div>
+
+    <div class="add-panel" id="addPanel">
+      <div class="add-panel-title">Add a rule card</div>
+      <div class="add-row">
+        <input class="add-input" id="inputTitle" placeholder="Rule title (e.g. Present Tense)" style="flex:2;" />
+        <select class="add-input" id="inputTag">
+          <option value="rule">Rule</option>
+          <option value="table">Table</option>
+          <option value="tip">Tip</option>
+          <option value="exception">Exception</option>
+        </select>
+      </div>
+      <div class="add-row" style="margin-top:8px;">
+        <input class="add-input" id="inputFormula" placeholder="Formula (e.g. verb stem + 아/어요)" style="flex:3;" />
+      </div>
+      <div class="add-row" style="margin-top:8px;">
+        <textarea class="add-input" id="inputExplain" placeholder="Explanation..." rows="2" style="flex:3; resize:vertical;"></textarea>
+      </div>
+      <div class="add-row" style="margin-top:8px;">
+        <input class="add-input" id="inputEx1" placeholder="Example 1 (e.g. 먹다 -> 먹어요)" />
+        <input class="add-input" id="inputEx2" placeholder="Example 2" />
+      </div>
+      <div class="add-row" style="margin-top:8px;">
+        <input class="add-input" id="inputException" placeholder="Exception / note (optional)" />
+        <button class="btn-add" onclick="addCard()" style="white-space:nowrap; flex-shrink:0;">Add card</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="legend">
+  <span style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.1em; text-transform:uppercase; color:var(--text3);">Colour key:</span>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--rule-base)"></div> Base form</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--rule-change)"></div> Change</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--rule-explain)"></div> Explanation</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--rule-example)"></div> Example</div>
+  <div style="margin-left:auto; font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--text3);">Press <kbd style="border:1px solid var(--border2); border-radius:3px; padding:1px 5px; background:var(--bg3);">/</kbd> to search</div>
+</div>
+
+<script>
+// ── CONFIG ────────────────────────────────────────────────────────────────────
+// To add a new category: add a data file in data/, add an entry here, add a sidebar item in HTML.
+
+var ALL_CATS = ['hangeul', 'pronunciation', 'grammar', 'counting', 'honorific'];
+
+var CAT_META = {
+  hangeul:       { title: '<span>가나다</span> Hangeul Alphabets',  subtitle: 'consonants · vowels · syllable blocks' },
+  pronunciation: { title: '<span>발음</span> Pronunciation Rules',  subtitle: '받침 · liaison · nasalisation · tensification' },
+  grammar:       { title: '<span>문법</span> Grammar Rules',        subtitle: 'particles · tense · connectors · negation' },
+  counting:      { title: '<span>수</span> Counting &amp; Units',   subtitle: 'native · sino-korean · counters · time · dates' },
+  honorific:     { title: '<span>존댓말</span> Honorific Forms',    subtitle: 'speech levels · (으)시 · humble forms · 합쇼체' },
+};
+
+var CAT_LABELS = {
+  hangeul: 'Hangeul Alphabets',
+  pronunciation: 'Pronunciation',
+  grammar: 'Grammar',
+  counting: 'Counting & Units',
+  honorific: 'Honorific Forms',
+};
+
+// Assemble seed from loaded data files
+var SEED = {
+  hangeul:       (typeof HANGEUL_DATA       !== 'undefined') ? HANGEUL_DATA       : [],
+  pronunciation: (typeof PRONUNCIATION_DATA !== 'undefined') ? PRONUNCIATION_DATA : [],
+  grammar:       (typeof GRAMMAR_DATA       !== 'undefined') ? GRAMMAR_DATA       : [],
+  counting:      (typeof COUNTING_DATA      !== 'undefined') ? COUNTING_DATA      : [],
+  honorific:     (typeof HONORIFIC_DATA     !== 'undefined') ? HONORIFIC_DATA     : [],
+};
+
+// ── DATA / PERSISTENCE ────────────────────────────────────────────────────────
+function load() {
+  try {
+    var d = JSON.parse(localStorage.getItem('krlearn_vA') || 'null');
+    if (d) {
+      // Fill in any categories that didn't exist when localStorage was last saved
+      ALL_CATS.forEach(function(cat) {
+        if (!d[cat]) d[cat] = JSON.parse(JSON.stringify(SEED[cat] || []));
+      });
+      return d;
+    }
+    return JSON.parse(JSON.stringify(SEED));
+  } catch(e) { return JSON.parse(JSON.stringify(SEED)); }
+}
+function save(d) {
+  try { localStorage.setItem('krlearn_vA', JSON.stringify(d)); } catch(e) {}
+}
+
+var data = load();
+var currentCat = 'hangeul';
+
+// ── RENDER ────────────────────────────────────────────────────────────────────
+function renderAll() { updateCounts(); renderCards(); updateProgress(); }
+
+function updateCounts() {
+  var total = 0;
+  ALL_CATS.forEach(function(cat) {
+    var n = (data[cat] || []).length;
+    var el = document.getElementById('count-' + cat);
+    if (el) el.textContent = n + ' rule' + (n !== 1 ? 's' : '');
+    total += n;
+  });
+  document.getElementById('totalCards').textContent = total;
+}
+
+function updateProgress() {
+  var total = ALL_CATS.reduce(function(a, cat){ return a + (data[cat] || []).length; }, 0);
+  var pct = Math.min(100, Math.round(total / 80 * 100));
+  document.getElementById('masteryPct').textContent = pct + '%';
+  document.getElementById('progressFill').style.width = pct + '%';
+}
+
+function renderCards() {
+  var grid = document.getElementById('cardGrid');
+  var cards = data[currentCat] || [];
+  if (cards.length === 0) {
+    grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1;"><div class="empty-glyph">가</div><div class="empty-text">No cards yet. Add your first rule below.</div></div>';
+    return;
+  }
+  grid.innerHTML = cards.map(function(c){ return c.type === 'table' ? renderTableCard(c) : renderRuleCard(c); }).join('');
+}
+
+function renderRuleCard(c, hl_term) {
+  return '<div class="rule-card">' +
+    '<div class="card-header"><div>' +
+    '<div class="card-tags-row"><div class="card-tag">' + c.type.toUpperCase() + '</div>' +
+    (c.tag ? '<span class="card-source-tag">' + esc(c.tag) + '</span>' : '') + '</div>' +
+    '<div class="card-title-text">' + hl(esc(c.title), hl_term) + '</div>' +
+    '</div></div>' +
+    '<div class="card-body">' +
+    (c.formula ? '<div class="formula"><span class="f-base">' + fmtFormula(c.formula, hl_term) + '</span></div>' : '') +
+    (c.explain ? '<div class="card-explain">' + hl(esc(c.explain), hl_term) + '</div>' : '') +
+    ((c.ex1 || c.ex2) ? '<div class="examples-label">Examples</div>' +
+      (c.ex1 ? '<div class="example-row">' + hl(esc(c.ex1), hl_term) + '</div>' : '') +
+      (c.ex2 ? '<div class="example-row">' + hl(esc(c.ex2), hl_term) + '</div>' : '') : '') +
+    (c.exception ? '<div class="exception-block"><div class="exception-label">Exception / Note</div><div class="exception-text">' + hl(esc(c.exception), hl_term) + '</div></div>' : '') +
+    '</div></div>';
+}
+
+function renderTableCard(c, hl_term) {
+  if (!c.tableData) return renderRuleCard(c, hl_term);
+  var headers = c.tableData.headers, rows = c.tableData.rows;
+  return '<div class="table-card" style="grid-column:1/-1;">' +
+    '<div class="card-header"><div>' +
+    '<div class="card-tags-row"><div class="card-tag">TABLE</div>' +
+    (c.tag ? '<span class="card-source-tag">' + esc(c.tag) + '</span>' : '') + '</div>' +
+    '<div class="card-title-text">' + hl(esc(c.title), hl_term) + '</div>' +
+    '</div></div>' +
+    '<div style="overflow-x:auto;"><table class="kr-table">' +
+    '<thead><tr>' + headers.map(function(h){ return '<th>' + esc(h) + '</th>'; }).join('') + '</tr></thead>' +
+    '<tbody>' + rows.map(function(row){
+      return '<tr>' + row.map(function(cell, i){
+        var cls = i === 0 ? 'kr-char' : i === 1 ? 'kr-rom' : (i === row.length - 1 && headers.length > 3 ? 'kr-note' : '');
+        return '<td class="' + cls + '">' + hl(esc(cell), hl_term) + '</td>';
+      }).join('') + '</tr>';
+    }).join('') + '</tbody>' +
+    '</table></div></div>';
+}
+
+function esc(s) {
+  if (!s) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function fmtFormula(s, hl_term) {
+  var t = esc(s);
+  t = t.replace(/~([^~]+)~/g, '<span class="f-strike">$1</span>');
+  return hl(t, hl_term);
+}
+function hl(text, term) {
+  if (!term) return text;
+  var re = new RegExp('(' + term.replace(/[.*+?^${}()|[\]\\]/g,'\\$&') + ')', 'gi');
+  return text.replace(re, '<span class="srr-highlight">$1</span>');
+}
+
+// ── NAVIGATION ────────────────────────────────────────────────────────────────
+function switchCat(el) {
+  document.querySelectorAll('.sidebar-item').forEach(function(i){ i.classList.remove('active'); });
+  el.classList.add('active');
+  currentCat = el.dataset.cat;
+  var meta = CAT_META[currentCat];
+  document.getElementById('mainTitle').innerHTML = meta.title;
+  document.getElementById('mainSubtitle').textContent = meta.subtitle;
+  renderCards();
+  document.getElementById('main').scrollTop = 0;
+  if (!sidebarPinned && !sidebarCollapsed) collapseSidebar();
+}
+
+// ── ADD / DELETE ──────────────────────────────────────────────────────────────
+function addCard() {
+  var title = document.getElementById('inputTitle').value.trim();
+  if (!title) { document.getElementById('inputTitle').focus(); return; }
+  var card = {
+    id: 'u' + Date.now(),
+    type: document.getElementById('inputTag').value,
+    title: title,
+    formula:   document.getElementById('inputFormula').value.trim(),
+    explain:   document.getElementById('inputExplain').value.trim(),
+    ex1:       document.getElementById('inputEx1').value.trim(),
+    ex2:       document.getElementById('inputEx2').value.trim(),
+    exception: document.getElementById('inputException').value.trim(),
+  };
+  if (!data[currentCat]) data[currentCat] = [];
+  data[currentCat].push(card);
+  save(data);
+  ['inputTitle','inputFormula','inputExplain','inputEx1','inputEx2','inputException']
+    .forEach(function(id){ document.getElementById(id).value = ''; });
+  renderAll();
+}
+
+function deleteCard(id) {
+  if (!confirm('Delete this card?')) return;
+  ALL_CATS.forEach(function(cat){ data[cat] = (data[cat] || []).filter(function(c){ return c.id !== id; }); });
+  save(data);
+  renderAll();
+}
+
+function scrollToAdd() {
+  document.getElementById('addPanel').scrollIntoView({ behavior: 'smooth' });
+}
+
+// ── SIDEBAR ───────────────────────────────────────────────────────────────────
+var sidebarCollapsed = false;
+var sidebarPinned = false;
+var sidebar = document.getElementById('sidebar');
+var collapseBtn = document.getElementById('collapseBtn');
+var pinBtn = document.getElementById('pinBtn');
+
+function collapseSidebar() {
+  sidebarCollapsed = true;
+  sidebar.classList.add('collapsed');
+  collapseBtn.innerHTML = '&gt;&gt;';
+  collapseBtn.title = 'Expand sidebar';
+}
+function expandSidebar() {
+  sidebarCollapsed = false;
+  sidebar.classList.remove('collapsed');
+  collapseBtn.innerHTML = '&lt;&lt;';
+  collapseBtn.title = 'Collapse sidebar';
+}
+
+collapseBtn.addEventListener('click', function() {
+  sidebarCollapsed ? expandSidebar() : collapseSidebar();
+});
+pinBtn.addEventListener('click', function() {
+  sidebarPinned = !sidebarPinned;
+  pinBtn.classList.toggle('active', sidebarPinned);
+  pinBtn.title = sidebarPinned ? 'Unpin sidebar' : 'Pin sidebar open';
+  if (sidebarPinned && sidebarCollapsed) expandSidebar();
+});
+sidebar.addEventListener('mouseenter', function() {
+  if (sidebarCollapsed) expandSidebar();
+});
+sidebar.addEventListener('mouseleave', function() {
+  if (!sidebarPinned) collapseSidebar();
+});
+
+// ── SEARCH ────────────────────────────────────────────────────────────────────
+var searchInput = document.getElementById('searchInput');
+var searchDropdown = document.getElementById('searchDropdown');
+var searchResults = document.getElementById('searchResults');
+
+searchInput.addEventListener('focus', function() {
+  searchDropdown.classList.add('open');
+});
+
+searchInput.addEventListener('input', function() {
+  var q = this.value.trim().toLowerCase();
+  if (q.length < 1) {
+    searchResults.innerHTML = '<div class="search-empty">Start typing to search across all categories.</div>';
+    return;
+  }
+  var found = [];
+  ALL_CATS.forEach(function(cat) {
+    (data[cat] || []).forEach(function(c) {
+      var haystack = [c.title, c.formula, c.explain, c.ex1, c.ex2, c.exception].filter(Boolean).join(' ').toLowerCase();
+      if (c.tableData) c.tableData.rows.forEach(function(r){ haystack += ' ' + r.join(' ').toLowerCase(); });
+      if (haystack.includes(q)) found.push({ cat: cat, card: c });
+    });
+  });
+
+  if (found.length === 0) {
+    searchResults.innerHTML = '<div class="search-empty">No cards matched "' + esc(q) + '".</div>';
+    return;
+  }
+
+  var html = '', lastCat = null;
+  found.forEach(function(item) {
+    if (item.cat !== lastCat) {
+      html += '<div class="search-cat-label">' + CAT_LABELS[item.cat] + '</div>';
+      lastCat = item.cat;
+    }
+    var c = item.card;
+    var snippet = (c.explain || c.formula || c.ex1 || '').substring(0, 80);
+    html += '<div class="search-result-row" onclick="goToCard(\'' + item.cat + '\',\'' + c.id + '\')">' +
+      '<div class="srr-tag">' + c.type.toUpperCase() + '</div>' +
+      '<div><div class="srr-title">' + hl(esc(c.title), esc(q)) + '</div>' +
+      (snippet ? '<div class="srr-snippet">' + hl(esc(snippet), esc(q)) + '</div>' : '') +
+      '</div></div>';
+  });
+  searchResults.innerHTML = html;
+});
+
+function goToCard(cat, id) {
+  searchInput.value = '';
+  searchDropdown.classList.remove('open');
+  var sidebarItem = document.querySelector('[data-cat="' + cat + '"]');
+  if (sidebarItem) {
+    var wasPinned = sidebarPinned; sidebarPinned = true;
+    switchCat(sidebarItem);
+    sidebarPinned = wasPinned;
+  }
+  setTimeout(function() {
+    var cards = document.getElementById('cardGrid').querySelectorAll('.rule-card, .table-card');
+    var idx = (data[cat] || []).findIndex(function(c){ return c.id === id; });
+    if (cards[idx]) {
+      cards[idx].scrollIntoView({ behavior: 'smooth', block: 'center' });
+      cards[idx].style.borderColor = 'var(--accent)';
+      setTimeout(function(){ cards[idx].style.borderColor = ''; }, 1800);
+    }
+  }, 80);
+}
+
+document.addEventListener('click', function(e) {
+  if (!document.querySelector('.topbar-search-wrap').contains(e.target)) {
+    searchDropdown.classList.remove('open');
+  }
+});
+document.addEventListener('keydown', function(e) {
+  if (e.key === '/' && document.activeElement !== searchInput &&
+      document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+    e.preventDefault(); searchInput.focus();
+  }
+  if (e.key === 'Escape') { searchInput.blur(); searchDropdown.classList.remove('open'); }
+});
+
+document.getElementById('toggleBtn').addEventListener('click', function() {
+  document.body.classList.toggle('light');
+});
+
+renderAll();
+</script>
+</body>
+</html>

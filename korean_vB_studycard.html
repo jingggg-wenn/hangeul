@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>한국어Guide - Study Card</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700&family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500;600&display=swap');
+
+:root {
+  --bg: #f5f0e8;
+  --bg2: #ffffff;
+  --bg3: #ede8df;
+  --border: #ddd6c8;
+  --border2: #ccc4b4;
+  --text: #1a1008;
+  --text2: #7a6a52;
+  --text3: #a8997e;
+  --accent: #c0392b;
+  --accent2: #1a1008;
+  --rule-base: #1a1008;
+  --rule-change: #c0392b;
+  --rule-explain: #1a5faa;
+  --rule-example: #1a7a3a;
+  --sidebar-w: 230px;
+}
+.dark {
+  --bg: #161209;
+  --bg2: #1e1810;
+  --bg3: #252018;
+  --border: #2e2820;
+  --border2: #3a3228;
+  --text: #ede8df;
+  --text2: #9a8a72;
+  --text3: #6a5a42;
+  --accent: #e04030;
+  --accent2: #ede8df;
+  --rule-base: #ede8df;
+  --rule-change: #e04030;
+  --rule-explain: #5b9aee;
+  --rule-example: #4ecb71;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; display: flex; flex-direction: column; height: 100vh; overflow: hidden; transition: background 0.2s, color 0.2s; }
+
+/* TOPBAR */
+.topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 28px; height: 58px; border-bottom: 2px solid var(--text);
+  background: var(--bg); flex-shrink: 0;
+}
+.logo { font-family: 'Noto Serif KR', serif; font-weight: 700; font-size: 18px; color: var(--text); }
+.logo span { color: var(--accent); }
+.topbar-center { display: flex; align-items: center; gap: 14px; }
+.mastery-label { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text3); }
+.mastery-label strong { color: var(--accent); }
+.progress-track { width: 110px; height: 3px; background: var(--border2); border-radius: 2px; }
+.progress-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.4s; }
+.toggle-btn {
+  width: 34px; height: 34px; border-radius: 50%; border: 2px solid var(--text);
+  background: transparent; cursor: pointer; font-size: 14px; display: flex;
+  align-items: center; justify-content: center; color: var(--text); transition: background 0.15s;
+}
+.toggle-btn:hover { background: var(--bg3); }
+
+/* LAYOUT */
+.layout { display: flex; flex: 1; overflow: hidden; }
+
+/* SIDEBAR */
+.sidebar {
+  width: var(--sidebar-w); border-right: 2px solid var(--text); background: var(--bg);
+  display: flex; flex-direction: column; flex-shrink: 0; overflow-y: auto;
+}
+.sidebar-section-label {
+  padding: 22px 22px 10px;
+  font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.14em;
+  color: var(--text3); text-transform: uppercase;
+}
+.sidebar-item {
+  display: flex; align-items: center; gap: 14px;
+  padding: 13px 22px; cursor: pointer;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.12s;
+  position: relative;
+}
+.sidebar-item::before {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+  width: 3px; background: var(--accent); opacity: 0; transition: opacity 0.15s;
+}
+.sidebar-item:hover { background: var(--bg3); }
+.sidebar-item.active { background: var(--bg3); }
+.sidebar-item.active::before { opacity: 1; }
+.sidebar-glyph {
+  font-family: 'Noto Serif KR', serif; font-size: 24px; color: var(--border2);
+  width: 32px; text-align: center; line-height: 1; font-weight: 700;
+  transition: color 0.15s;
+}
+.sidebar-item.active .sidebar-glyph { color: var(--accent); }
+.sidebar-name { font-size: 13px; font-weight: 700; color: var(--text); }
+.sidebar-count { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text3); margin-top: 2px; }
+.sidebar-item.active .sidebar-count { color: var(--accent); }
+
+.sidebar-stats {
+  margin-top: auto; padding: 18px 22px; border-top: 1px solid var(--border);
+}
+.stat-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.stat-lbl { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text3); }
+.stat-val { font-family: 'Noto Serif KR', serif; font-size: 16px; font-weight: 700; color: var(--text); }
+.stat-val.red { color: var(--accent); }
+
+/* MAIN */
+.main { flex: 1; overflow-y: auto; display: flex; flex-direction: column; background: var(--bg); }
+.main-header {
+  padding: 28px 32px 20px; border-bottom: 1px solid var(--border);
+  display: flex; align-items: flex-end; justify-content: space-between; flex-shrink: 0;
+}
+.main-eyebrow { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.14em; color: var(--text3); text-transform: uppercase; margin-bottom: 8px; }
+.main-title { font-family: 'Noto Serif KR', serif; font-size: 26px; font-weight: 700; color: var(--text); }
+.main-title span { color: var(--accent); }
+.main-subtitle { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text3); margin-top: 4px; }
+.btn-add {
+  background: var(--accent2); color: var(--bg); border: none; border-radius: 6px;
+  padding: 9px 18px; font-weight: 700; font-size: 12px; cursor: pointer;
+  font-family: 'DM Sans', sans-serif; transition: opacity 0.15s;
+}
+.btn-add:hover { opacity: 0.8; }
+
+/* CARD GRID */
+.card-grid {
+  padding: 28px 32px; display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 18px; align-content: start;
+}
+
+/* RULE CARD */
+.rule-card {
+  background: var(--bg2); border: 1.5px solid var(--border); border-radius: 12px;
+  overflow: hidden; transition: box-shadow 0.15s, border-color 0.15s;
+  position: relative;
+}
+.rule-card:hover { border-color: var(--accent); box-shadow: 0 4px 20px rgba(0,0,0,0.07); }
+
+.card-accent-bar { height: 4px; background: var(--accent); }
+.card-header { padding: 16px 20px 12px; }
+.card-tag {
+  display: inline-block; font-family: 'DM Mono', monospace; font-size: 9px;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent);
+  border: 1px solid var(--border2); background: var(--bg3);
+  padding: 2px 8px; border-radius: 3px; margin-bottom: 6px;
+}
+.card-title-text { font-family: 'Noto Serif KR', serif; font-size: 17px; font-weight: 700; color: var(--text); }
+.card-delete { position: absolute; top: 12px; right: 12px; cursor: pointer; color: var(--text3); font-size: 14px; padding: 4px 7px; border-radius: 4px; }
+.card-delete:hover { background: var(--bg3); color: var(--accent); }
+
+.card-divider { height: 1px; background: var(--border); margin: 0 20px; }
+.card-body { padding: 16px 20px; }
+
+/* FORMULA */
+.formula {
+  background: var(--bg3); border-radius: 7px; padding: 10px 14px;
+  font-family: 'DM Mono', monospace; font-size: 13px;
+  display: flex; align-items: center; gap: 4px; flex-wrap: wrap; margin-bottom: 12px;
+  border-left: 3px solid var(--accent);
+}
+.f-base { color: var(--rule-base); font-weight: 600; }
+.f-change { color: var(--rule-change); font-weight: 700; }
+.f-explain { color: var(--rule-explain); font-size: 11px; }
+.f-arrow { color: var(--text3); padding: 0 2px; }
+
+.card-explain { font-size: 13px; color: var(--text2); line-height: 1.65; margin-bottom: 14px; }
+
+.examples-label {
+  font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--text3); margin-bottom: 6px;
+}
+.example-row {
+  font-family: 'DM Mono', monospace; font-size: 12px; color: var(--rule-example);
+  padding: 4px 0; border-bottom: 1px dashed var(--border);
+}
+.example-row:last-of-type { border-bottom: none; }
+
+.exception-block {
+  margin-top: 14px; background: var(--bg3);
+  border-left: 3px solid var(--rule-change); border-radius: 6px; padding: 10px 14px;
+}
+.exception-label {
+  font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--rule-change); margin-bottom: 4px;
+}
+.exception-text { font-size: 12px; color: var(--text2); line-height: 1.55; }
+
+/* TABLE CARD */
+.table-card { background: var(--bg2); border: 1.5px solid var(--border); border-radius: 12px; overflow: hidden; grid-column: 1 / -1; }
+.table-card .card-accent-bar { background: var(--accent2); }
+.kr-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.kr-table th {
+  background: var(--bg3); font-family: 'DM Mono', monospace;
+  font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--text3); padding: 10px 16px; text-align: left;
+  border-bottom: 1.5px solid var(--border);
+}
+.kr-table td { padding: 10px 16px; border-bottom: 1px solid var(--border); color: var(--text); }
+.kr-table tr:last-child td { border-bottom: none; }
+.kr-table tr:hover td { background: var(--bg3); }
+.kr-table .kr-char { font-family: 'Noto Serif KR', serif; font-size: 20px; font-weight: 700; color: var(--accent); }
+.kr-table .kr-rom { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--text2); }
+.kr-table .kr-note { font-size: 12px; color: var(--rule-explain); }
+
+/* ADD PANEL */
+.add-panel {
+  margin: 0 32px 32px; background: var(--bg2); border: 1.5px dashed var(--border2);
+  border-radius: 12px; padding: 22px 24px;
+}
+.add-panel-title { font-family: 'Noto Serif KR', serif; font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 14px; }
+.add-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.add-input {
+  flex: 1; min-width: 140px; background: var(--bg); border: 1.5px solid var(--border2);
+  border-radius: 7px; padding: 9px 13px; color: var(--text);
+  font-family: 'DM Sans', sans-serif; font-size: 13px; outline: none;
+  transition: border-color 0.15s;
+}
+.add-input:focus { border-color: var(--accent); }
+.add-input::placeholder { color: var(--text3); }
+select.add-input { cursor: pointer; }
+
+/* EMPTY */
+.empty-state { padding: 56px 28px; text-align: center; color: var(--text3); grid-column: 1/-1; }
+.empty-glyph { font-family: 'Noto Serif KR', serif; font-size: 56px; margin-bottom: 12px; color: var(--border2); }
+.empty-text { font-family: 'DM Mono', monospace; font-size: 13px; }
+
+/* LEGEND */
+.legend {
+  display: flex; gap: 20px; align-items: center; flex-wrap: wrap;
+  padding: 10px 32px; border-top: 1px solid var(--border);
+  background: var(--bg2); flex-shrink: 0;
+}
+.legend-item { display: flex; align-items: center; gap: 6px; font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text3); }
+.legend-dot { width: 8px; height: 8px; border-radius: 2px; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo">한국어 <span>Guide</span></div>
+  <div class="topbar-center">
+    <div class="mastery-label">Mastery <strong id="masteryPct">0%</strong></div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+  </div>
+  <div class="toggle-btn" id="toggleBtn" title="Toggle dark mode">◑</div>
+</div>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar-section-label">Categories</div>
+
+    <div class="sidebar-item active" data-cat="pronunciation" onclick="switchCat(this)">
+      <div class="sidebar-glyph">발</div>
+      <div>
+        <div class="sidebar-name">Pronunciation</div>
+        <div class="sidebar-count" id="count-pronunciation">0 rules</div>
+      </div>
+    </div>
+    <div class="sidebar-item" data-cat="grammar" onclick="switchCat(this)">
+      <div class="sidebar-glyph">문</div>
+      <div>
+        <div class="sidebar-name">Grammar</div>
+        <div class="sidebar-count" id="count-grammar">0 rules</div>
+      </div>
+    </div>
+    <div class="sidebar-item" data-cat="counting" onclick="switchCat(this)">
+      <div class="sidebar-glyph">수</div>
+      <div>
+        <div class="sidebar-name">Counting &amp; Units</div>
+        <div class="sidebar-count" id="count-counting">0 rules</div>
+      </div>
+    </div>
+    <div class="sidebar-item" data-cat="hangeul" onclick="switchCat(this)">
+      <div class="sidebar-glyph">가</div>
+      <div>
+        <div class="sidebar-name">Hangeul Basics</div>
+        <div class="sidebar-count" id="count-hangeul">0 rules</div>
+      </div>
+    </div>
+
+    <div class="sidebar-stats">
+      <div class="stat-row">
+        <div class="stat-lbl">Total cards</div>
+        <div class="stat-val red" id="totalCards">0</div>
+      </div>
+      <div class="stat-row" style="margin-bottom:0;">
+        <div class="stat-lbl">Streak</div>
+        <div class="stat-val">—</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main" id="main">
+    <div class="main-header">
+      <div>
+        <div class="main-eyebrow" id="mainEyebrow">발음 규칙</div>
+        <div class="main-title" id="mainTitle"><span>Pronunciation</span> Rules</div>
+        <div class="main-subtitle" id="mainSubtitle">받침 · liaison · nasalisation · tensification</div>
+      </div>
+      <button class="btn-add" onclick="scrollToAdd()">+ Add card</button>
+    </div>
+
+    <div class="card-grid" id="cardGrid"></div>
+
+    <!-- ADD PANEL -->
+    <div class="add-panel" id="addPanel">
+      <div class="add-panel-title">Add a rule card</div>
+      <div class="add-row">
+        <input class="add-input" id="inputTitle" placeholder="Rule title (e.g. Present Tense)" style="flex:2;" />
+        <select class="add-input" id="inputTag" style="max-width:130px;">
+          <option value="rule">Rule</option>
+          <option value="table">Table</option>
+          <option value="tip">Tip</option>
+          <option value="exception">Exception</option>
+        </select>
+      </div>
+      <div class="add-row" style="margin-top:8px;">
+        <input class="add-input" id="inputFormula" placeholder="Formula (e.g. verb stem + 아/어요)" />
+      </div>
+      <div class="add-row" style="margin-top:8px;">
+        <textarea class="add-input" id="inputExplain" placeholder="Explanation..." rows="2" style="resize:vertical;"></textarea>
+      </div>
+      <div class="add-row" style="margin-top:8px;">
+        <input class="add-input" id="inputEx1" placeholder="Example 1 (e.g. 먹다 → 먹어요)" />
+        <input class="add-input" id="inputEx2" placeholder="Example 2" />
+      </div>
+      <div class="add-row" style="margin-top:8px;">
+        <input class="add-input" id="inputException" placeholder="Exception / note (optional)" />
+        <button class="btn-add" onclick="addCard()" style="white-space:nowrap; flex-shrink:0;">Add card</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LEGEND -->
+<div class="legend">
+  <span style="font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.12em; text-transform:uppercase; color:var(--text3);">Colour key:</span>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--rule-base)"></div> Base form</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--rule-change)"></div> Change</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--rule-explain)"></div> Explanation</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--rule-example)"></div> Example</div>
+</div>
+
+<script>
+const SEED = {
+  pronunciation: [
+    {
+      id: 's1', type: 'rule',
+      title: 'Batchim Liaison (연음)',
+      formula: '[consonant batchim] + vowel syllable',
+      explain: 'When a syllable ends in a consonant (batchim) and the next syllable starts with ㅇ, the batchim sound moves to fill the ㅇ slot.',
+      ex1: '먹어요 → [머거요]',
+      ex2: '닭이 → [달기]',
+      exception: 'Double batchim: only the second consonant links over. 닭 → 달 + ㄱ links.'
+    },
+    {
+      id: 's2', type: 'rule',
+      title: 'Nasalisation (비음화)',
+      formula: 'ㄱ/ㄷ/ㅂ + ㄴ/ㅁ → ㅇ/ㄴ/ㅁ',
+      explain: 'Stop consonants (ㄱ ㄷ ㅂ) become nasal sounds when followed by a nasal consonant (ㄴ or ㅁ).',
+      ex1: '국물 → [궁물]',
+      ex2: '입문 → [임문]',
+      exception: 'ㄹ also triggers nasalisation: 독립 → [동닙]'
+    },
+    {
+      id: 's3', type: 'table',
+      title: 'Batchim Pronunciation Chart',
+      formula: '', explain: '', ex1: '', ex2: '', exception: '',
+      tableData: {
+        headers: ['Batchim', 'Pronounced as', 'Example', 'Notes'],
+        rows: [
+          ['ㄱ ㅋ ㄲ', '[ㄱ]', '부엌 → [부억]', 'all collapse to ㄱ sound'],
+          ['ㄷ ㅅ ㅆ ㅈ ㅊ ㅌ ㅎ', '[ㄷ]', '옷 → [옫]', '7 consonants → ㄷ'],
+          ['ㅂ ㅍ', '[ㅂ]', '앞 → [압]', 'bilabial stop'],
+          ['ㄴ', '[ㄴ]', '눈', 'unchanged'],
+          ['ㄹ', '[ㄹ]', '말', 'unchanged'],
+          ['ㅁ', '[ㅁ]', '봄', 'unchanged'],
+          ['ㅇ', '[ㅇ]', '방', 'ng sound, unchanged'],
+        ]
+      }
+    }
+  ],
+  grammar: [
+    {
+      id: 's4', type: 'rule',
+      title: 'Present Tense Polite (아/어요)',
+      formula: 'verb stem + 아요 / 어요',
+      explain: 'Drop 다 from the dictionary form. If the last vowel in the stem is ㅏ or ㅗ, add 아요. All other vowels: add 어요. 하다 verbs use 해요.',
+      ex1: '먹다 → 먹 + 어요 → 먹어요',
+      ex2: '가다 → 가 + 아요 → 가요 (contracts)',
+      exception: '하다 → 해요 (not 하아요). Contraction always happens when stem ends in ㅏ/ㅓ.'
+    },
+    {
+      id: 's5', type: 'rule',
+      title: 'Past Tense Polite (았/었어요)',
+      formula: 'verb stem + 았어요 / 었어요',
+      explain: 'Same vowel harmony rule as present tense. ㅏ/ㅗ stems take 았어요, all others take 었어요.',
+      ex1: '먹다 → 먹었어요',
+      ex2: '살다 → 살았어요',
+      exception: '하다 → 했어요. Irregular ㅂ verbs: 덥다 → 더웠어요'
+    }
+  ],
+  counting: [
+    {
+      id: 's6', type: 'table',
+      title: 'Native vs. Sino-Korean Numbers',
+      formula: '', explain: '', ex1: '', ex2: '', exception: '',
+      tableData: {
+        headers: ['Number', 'Sino (한자어)', 'Native (순우리말)', 'Use Sino for', 'Use Native for'],
+        rows: [
+          ['1', '일', '하나 (한)', 'dates, money, floors', 'counting objects, age'],
+          ['2', '이', '둘 (두)', 'phone numbers', 'people, animals'],
+          ['3', '삼', '셋 (세)', 'minutes, seconds', 'hours (시)'],
+          ['4', '사', '넷 (네)', '', ''],
+          ['5', '오', '다섯', '', ''],
+          ['10', '십', '열', '', ''],
+          ['100', '백', '—', 'only Sino', '—'],
+        ]
+      }
+    }
+  ],
+  hangeul: [
+    {
+      id: 's7', type: 'table',
+      title: 'Basic Consonants (자음)',
+      formula: '', explain: '', ex1: '', ex2: '', exception: '',
+      tableData: {
+        headers: ['Letter', 'Name', 'Initial sound', 'Final (batchim)'],
+        rows: [
+          ['ㄱ', '기역', 'g / k', 'k'],
+          ['ㄴ', '니은', 'n', 'n'],
+          ['ㄷ', '디귿', 'd / t', 't'],
+          ['ㄹ', '리을', 'r / l', 'l'],
+          ['ㅁ', '미음', 'm', 'm'],
+          ['ㅂ', '비읍', 'b / p', 'p'],
+          ['ㅅ', '시옷', 's', 't'],
+          ['ㅇ', '이응', 'silent', 'ng'],
+          ['ㅈ', '지읒', 'j', 't'],
+          ['ㅎ', '히읗', 'h', 'silent'],
+        ]
+      }
+    }
+  ]
+};
+
+const CAT_META = {
+  pronunciation: { eyebrow: '발음 규칙', title: '<span>Pronunciation</span> Rules', subtitle: '받침 · liaison · nasalisation · tensification' },
+  grammar:       { eyebrow: '문법 규칙', title: '<span>Grammar</span> Rules',       subtitle: 'particles · tense · honorifics · connectors' },
+  counting:      { eyebrow: '숫자와 단위', title: '<span>Counting</span> &amp; Units', subtitle: 'native · sino-korean · counters · ordinals' },
+  hangeul:       { eyebrow: '한글 기초',  title: '<span>Hangeul</span> Basics',     subtitle: 'consonants · vowels · syllable blocks' },
+};
+
+function load() {
+  try {
+    const d = JSON.parse(localStorage.getItem('krlearn_vB') || 'null');
+    return d || JSON.parse(JSON.stringify(SEED));
+  } catch(e) { return JSON.parse(JSON.stringify(SEED)); }
+}
+function save(data) {
+  try { localStorage.setItem('krlearn_vB', JSON.stringify(data)); } catch(e) {}
+}
+
+let data = load();
+let currentCat = 'pronunciation';
+
+function renderAll() { updateCounts(); renderCards(); updateProgress(); }
+
+function updateCounts() {
+  ['pronunciation','grammar','counting','hangeul'].forEach(cat => {
+    const n = (data[cat] || []).length;
+    document.getElementById('count-' + cat).textContent = n + ' rule' + (n !== 1 ? 's' : '');
+  });
+  const total = Object.values(data).reduce((a, b) => a + b.length, 0);
+  document.getElementById('totalCards').textContent = total;
+}
+
+function updateProgress() {
+  const total = Object.values(data).reduce((a, b) => a + b.length, 0);
+  const pct = Math.min(100, Math.round(total / 61 * 100));
+  document.getElementById('masteryPct').textContent = pct + '%';
+  document.getElementById('progressFill').style.width = pct + '%';
+}
+
+function renderCards() {
+  const grid = document.getElementById('cardGrid');
+  const cards = data[currentCat] || [];
+  if (cards.length === 0) {
+    grid.innerHTML = `<div class="empty-state">
+      <div class="empty-glyph">가</div>
+      <div class="empty-text">No cards yet. Add your first rule below.</div>
+    </div>`;
+    return;
+  }
+  grid.innerHTML = cards.map(c => c.type === 'table' ? renderTableCard(c) : renderRuleCard(c)).join('');
+}
+
+function renderRuleCard(c) {
+  return `<div class="rule-card">
+    <div class="card-accent-bar"></div>
+    <div class="card-header">
+      <div class="card-tag">${c.type.toUpperCase()}</div>
+      <div class="card-title-text">${esc(c.title)}</div>
+      <span class="card-delete" onclick="deleteCard('${c.id}')" title="Delete">✕</span>
+    </div>
+    <div class="card-divider"></div>
+    <div class="card-body">
+      ${c.formula ? `<div class="formula"><span class="f-base">${esc(c.formula)}</span></div>` : ''}
+      ${c.explain ? `<div class="card-explain">${esc(c.explain)}</div>` : ''}
+      ${(c.ex1 || c.ex2) ? `
+        <div class="examples-label">Examples</div>
+        ${c.ex1 ? `<div class="example-row">${esc(c.ex1)}</div>` : ''}
+        ${c.ex2 ? `<div class="example-row">${esc(c.ex2)}</div>` : ''}
+      ` : ''}
+      ${c.exception ? `
+        <div class="exception-block">
+          <div class="exception-label">Exception / Note</div>
+          <div class="exception-text">${esc(c.exception)}</div>
+        </div>
+      ` : ''}
+    </div>
+  </div>`;
+}
+
+function renderTableCard(c) {
+  if (!c.tableData) return renderRuleCard(c);
+  const { headers, rows } = c.tableData;
+  return `<div class="table-card">
+    <div class="card-accent-bar"></div>
+    <div class="card-header" style="padding:16px 20px 12px; display:flex; align-items:flex-start; justify-content:space-between;">
+      <div>
+        <div class="card-tag">TABLE</div>
+        <div class="card-title-text">${esc(c.title)}</div>
+      </div>
+      <span class="card-delete" onclick="deleteCard('${c.id}')" title="Delete">✕</span>
+    </div>
+    <div style="overflow-x:auto;">
+      <table class="kr-table">
+        <thead><tr>${headers.map(h => `<th>${esc(h)}</th>`).join('')}</tr></thead>
+        <tbody>${rows.map(row => `<tr>${row.map((cell, i) => {
+          let cls = i === 0 ? 'kr-char' : i === 1 ? 'kr-rom' : (i === row.length - 1 && headers.length > 3 ? 'kr-note' : '');
+          return `<td class="${cls}">${esc(cell)}</td>`;
+        }).join('')}</tr>`).join('')}</tbody>
+      </table>
+    </div>
+  </div>`;
+}
+
+function esc(s) {
+  if (!s) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function switchCat(el) {
+  document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+  el.classList.add('active');
+  currentCat = el.dataset.cat;
+  const m = CAT_META[currentCat];
+  document.getElementById('mainEyebrow').textContent = m.eyebrow;
+  document.getElementById('mainTitle').innerHTML = m.title;
+  document.getElementById('mainSubtitle').textContent = m.subtitle;
+  renderCards();
+  document.getElementById('main').scrollTop = 0;
+}
+
+function addCard() {
+  const title = document.getElementById('inputTitle').value.trim();
+  if (!title) { document.getElementById('inputTitle').focus(); return; }
+  const card = {
+    id: 'u' + Date.now(),
+    type: document.getElementById('inputTag').value,
+    title,
+    formula:   document.getElementById('inputFormula').value.trim(),
+    explain:   document.getElementById('inputExplain').value.trim(),
+    ex1:       document.getElementById('inputEx1').value.trim(),
+    ex2:       document.getElementById('inputEx2').value.trim(),
+    exception: document.getElementById('inputException').value.trim(),
+  };
+  if (!data[currentCat]) data[currentCat] = [];
+  data[currentCat].push(card);
+  save(data);
+  ['inputTitle','inputFormula','inputExplain','inputEx1','inputEx2','inputException']
+    .forEach(id => document.getElementById(id).value = '');
+  renderAll();
+}
+
+function deleteCard(id) {
+  if (!confirm('Delete this card?')) return;
+  Object.keys(data).forEach(cat => { data[cat] = data[cat].filter(c => c.id !== id); });
+  save(data);
+  renderAll();
+}
+
+function scrollToAdd() {
+  document.getElementById('addPanel').scrollIntoView({ behavior: 'smooth' });
+}
+
+document.getElementById('toggleBtn').addEventListener('click', () => {
+  document.body.classList.toggle('dark');
+});
+
+renderAll();
+</script>
+</body>
+</html>
