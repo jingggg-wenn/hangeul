@@ -206,6 +206,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-ser
 .main-header {
   padding: 24px 28px 16px; border-bottom: 1px solid var(--border);
   display: flex; align-items: flex-end; justify-content: space-between; flex-shrink: 0;
+  position: sticky; top: 0; z-index: 10; background: var(--bg2);
 }
 .main-title { font-family: 'JetBrains Mono', monospace; font-size: 22px; font-weight: 700; color: var(--text); }
 .main-title span { color: var(--accent); }
@@ -217,6 +218,26 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-ser
   font-family: 'Inter', sans-serif; transition: opacity 0.15s;
 }
 .btn-add:hover { opacity: 0.85; }
+
+/* TAB BAR */
+.tab-bar {
+  display: none; padding: 0 28px; border-bottom: 1px solid var(--border);
+  background: var(--bg2); flex-shrink: 0;
+  position: sticky; top: 79px; z-index: 9;
+}
+.tab-bar.visible { display: flex; gap: 0; }
+.tab-btn {
+  font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.06em;
+  color: var(--text3); background: transparent; border: none;
+  padding: 10px 16px; cursor: pointer; position: relative;
+  transition: color 0.15s;
+}
+.tab-btn:hover { color: var(--text); }
+.tab-btn.active { color: var(--accent); }
+.tab-btn.active::after {
+  content: ''; position: absolute; left: 8px; right: 8px; bottom: -1px;
+  height: 2px; background: var(--accent); border-radius: 1px;
+}
 
 /* CARD GRID */
 .card-grid {
@@ -303,21 +324,86 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-ser
 }
 .exception-text { font-size: 12px; color: var(--text2); line-height: 1.5; }
 
+/* VOCAB CARD */
+.vocab-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 10px; padding: 16px 18px;
+  max-width: 720px; margin: 0 auto;
+}
+.vocab-card {
+  background: var(--bg); border: 1px solid var(--border); border-radius: 6px;
+  padding: 16px 12px; text-align: center;
+  transition: border-color 0.2s, background 0.15s, transform 0.15s;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  min-height: 90px;
+}
+.vocab-card:hover {
+  border-color: var(--accent); background: var(--bg3);
+  transform: translateY(-1px);
+}
+.vocab-kr {
+  font-family: 'JetBrains Mono', monospace; font-size: 22px; font-weight: 400;
+  color: var(--accent); line-height: 1.3; white-space: pre-line;
+}
+.vocab-kr-sub {
+  font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 400;
+  color: var(--accent); opacity: 0.7; margin-top: 2px;
+}
+.vocab-en {
+  font-family: 'JetBrains Mono', monospace; font-size: 11px;
+  color: var(--text); font-weight: 700; margin-top: 6px; letter-spacing: 0.04em;
+}
+.vocab-kr-row {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+}
+.vocab-prefix {
+  font-family: 'JetBrains Mono', monospace; font-size: 8px; font-weight: 700;
+  color: var(--text); text-transform: uppercase; letter-spacing: 0.06em;
+  line-height: 1.3; white-space: pre-line; text-align: right;
+}
+.vocab-star { color: var(--rule-change); font-size: 10px; vertical-align: super; font-weight: 700; }
+.vocab-origin {
+  font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 400;
+  color: #e05555; margin-top: 2px; letter-spacing: 0.04em;
+}
+.vocab-note {
+  font-family: 'JetBrains Mono', monospace; font-size: 11px;
+  color: var(--rule-change); line-height: 1.6; padding: 10px 18px 16px;
+  border-top: 1px solid var(--border);
+}
+@media (max-width: 480px) {
+  .vocab-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; padding: 12px 14px; }
+  .vocab-kr { font-size: 18px; }
+  .vocab-kr-sub { font-size: 11px; }
+}
+
 /* TABLE CARD */
 .table-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
-.table-card .card-header { padding: 14px 18px 12px; border-bottom: 1px solid var(--border); }
+.table-card .card-header {
+  padding: 14px 18px 12px; border-bottom: 1px solid var(--border);
+  display: flex; align-items: flex-start; justify-content: space-between; cursor: pointer;
+}
+.table-card.collapsed .card-header { border-bottom-color: transparent; }
+.table-body { transition: max-height 0.25s ease, opacity 0.2s ease; overflow: hidden; }
+.table-card.collapsed .table-body { max-height: 0; opacity: 0; }
+.table-toggle {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  color: var(--text3); padding: 4px 8px; flex-shrink: 0; cursor: pointer;
+  transition: color 0.15s;
+}
+.table-toggle:hover { color: var(--accent); }
 .kr-table { width: 100%; border-collapse: collapse; font-size: 12px; }
 .kr-table th {
   background: var(--bg3); font-family: 'JetBrains Mono', monospace;
-  font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase;
-  color: var(--text3); padding: 8px 12px; text-align: left;
-  border-bottom: 1px solid var(--border);
+  font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--accent); font-weight: 700; padding: 12px 12px; text-align: left;
+  border-bottom: 2px solid var(--accent);
 }
-.kr-table td { padding: 9px 12px; border-bottom: 1px solid var(--border); font-size: 13px; color: var(--text); }
+.kr-table td { padding: 9px 12px; border-bottom: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--text); }
 .kr-table tr:last-child td { border-bottom: none; }
 .kr-table tr:hover td { background: var(--bg3); }
-.kr-table .kr-char { font-size: 18px; font-weight: 600; color: var(--accent); }
-.kr-table .kr-rom { color: var(--text2); font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+.kr-table .kr-char { font-size: 16px; font-weight: 600; color: var(--accent); }
+.kr-table .kr-rom { color: var(--text2); font-size: 11px; }
 .kr-table .kr-note { color: var(--rule-explain); font-size: 11px; }
 
 /* ADD PANEL */
@@ -420,7 +506,7 @@ select.add-input { cursor: pointer; }
       <div class="sidebar-item" data-cat="counting" onclick="switchCat(this)">
         <div class="sidebar-glyph">수</div>
         <div class="sidebar-text">
-          <div class="sidebar-name">Counting &amp; Units</div>
+          <div class="sidebar-name">Counting, Units &amp; Positional</div>
           <div class="sidebar-count" id="count-counting">0 rules</div>
         </div>
       </div>
@@ -451,39 +537,13 @@ select.add-input { cursor: pointer; }
         <div class="main-title" id="mainTitle"><span>가나다</span> Hangeul Alphabets</div>
         <div class="main-subtitle" id="mainSubtitle">consonants · vowels · syllable blocks</div>
       </div>
-      <div class="main-actions">
-        <button class="btn-add" onclick="scrollToAdd()">+ Add card</button>
-      </div>
+      <div class="main-actions"></div>
     </div>
+
+    <div class="tab-bar" id="tabBar"></div>
 
     <div class="card-grid" id="cardGrid"></div>
 
-    <div class="add-panel" id="addPanel">
-      <div class="add-panel-title">Add a rule card</div>
-      <div class="add-row">
-        <input class="add-input" id="inputTitle" placeholder="Rule title (e.g. Present Tense)" style="flex:2;" />
-        <select class="add-input" id="inputTag">
-          <option value="rule">Rule</option>
-          <option value="table">Table</option>
-          <option value="tip">Tip</option>
-          <option value="exception">Exception</option>
-        </select>
-      </div>
-      <div class="add-row" style="margin-top:8px;">
-        <input class="add-input" id="inputFormula" placeholder="Formula (e.g. verb stem + 아/어요)" style="flex:3;" />
-      </div>
-      <div class="add-row" style="margin-top:8px;">
-        <textarea class="add-input" id="inputExplain" placeholder="Explanation..." rows="2" style="flex:3; resize:vertical;"></textarea>
-      </div>
-      <div class="add-row" style="margin-top:8px;">
-        <input class="add-input" id="inputEx1" placeholder="Example 1 (e.g. 먹다 -> 먹어요)" />
-        <input class="add-input" id="inputEx2" placeholder="Example 2" />
-      </div>
-      <div class="add-row" style="margin-top:8px;">
-        <input class="add-input" id="inputException" placeholder="Exception / note (optional)" />
-        <button class="btn-add" onclick="addCard()" style="white-space:nowrap; flex-shrink:0;">Add card</button>
-      </div>
-    </div>
   </div>
 </div>
 
@@ -506,7 +566,7 @@ var CAT_META = {
   hangeul:       { title: '<span>가나다</span> Hangeul Alphabets',  subtitle: 'consonants · vowels · syllable blocks' },
   pronunciation: { title: '<span>발음</span> Pronunciation Rules',  subtitle: '받침 · liaison · nasalisation · tensification' },
   grammar:       { title: '<span>문법</span> Grammar Rules',        subtitle: 'particles · tense · connectors · negation' },
-  counting:      { title: '<span>수</span> Counting &amp; Units',   subtitle: 'native · sino-korean · counters · time · dates' },
+  counting:      { title: '<span>수</span> Counting, Units &amp; Positional', subtitle: 'native · sino-korean · counters · time · dates · positional words' },
   honorific:     { title: '<span>존댓말</span> Honorific Forms',    subtitle: 'speech levels · (으)시 · humble forms · 합쇼체' },
 };
 
@@ -514,9 +574,22 @@ var CAT_LABELS = {
   hangeul: 'Hangeul Alphabets',
   pronunciation: 'Pronunciation',
   grammar: 'Grammar',
-  counting: 'Counting & Units',
+  counting: 'Counting, Units & Positional',
   honorific: 'Honorific Forms',
 };
+
+var CAT_TABS = {
+  counting: [
+    { key: 'all', label: '[ all ]' },
+    { key: 'counting', label: '[ counting ]' },
+    { key: 'positional', label: '[ positional ]' },
+    { key: 'time-grammar', label: '[ time grammar ]' },
+    { key: 'months-seasons', label: '[ seasons, months, days & dates ]' },
+    { key: 'money', label: '[ money ]' },
+  ]
+};
+
+var currentTab = 'all';
 
 // Assemble seed from loaded data files
 var SEED = {
@@ -549,7 +622,7 @@ var data = load();
 var currentCat = 'hangeul';
 
 // ── RENDER ────────────────────────────────────────────────────────────────────
-function renderAll() { updateCounts(); renderCards(); updateProgress(); }
+function renderAll() { updateCounts(); renderTabs(); renderCards(); updateProgress(); }
 
 function updateCounts() {
   var total = 0;
@@ -569,14 +642,41 @@ function updateProgress() {
   document.getElementById('progressFill').style.width = pct + '%';
 }
 
+function renderTabs() {
+  var tabBar = document.getElementById('tabBar');
+  var tabs = CAT_TABS[currentCat];
+  if (!tabs) {
+    tabBar.classList.remove('visible');
+    tabBar.innerHTML = '';
+    return;
+  }
+  tabBar.classList.add('visible');
+  tabBar.innerHTML = tabs.map(function(t) {
+    return '<button class="tab-btn' + (currentTab === t.key ? ' active' : '') + '" onclick="switchTab(\'' + t.key + '\')">' + t.label + '</button>';
+  }).join('');
+}
+
+function switchTab(key) {
+  currentTab = key;
+  renderTabs();
+  renderCards();
+}
+
 function renderCards() {
   var grid = document.getElementById('cardGrid');
   var cards = data[currentCat] || [];
+  if (currentTab !== 'all' && CAT_TABS[currentCat]) {
+    cards = cards.filter(function(c) { return c.group === currentTab; });
+  }
   if (cards.length === 0) {
     grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1;"><div class="empty-glyph">가</div><div class="empty-text">No cards yet. Add your first rule below.</div></div>';
     return;
   }
-  grid.innerHTML = cards.map(function(c){ return c.type === 'table' ? renderTableCard(c) : renderRuleCard(c); }).join('');
+  grid.innerHTML = cards.map(function(c){
+    if (c.type === 'vocab') return renderVocabCard(c);
+    if (c.type === 'table') return renderTableCard(c);
+    return renderRuleCard(c);
+  }).join('');
 }
 
 function renderRuleCard(c, hl_term) {
@@ -600,20 +700,68 @@ function renderTableCard(c, hl_term) {
   if (!c.tableData) return renderRuleCard(c, hl_term);
   var headers = c.tableData.headers, rows = c.tableData.rows;
   return '<div class="table-card" style="grid-column:1/-1;">' +
-    '<div class="card-header"><div>' +
+    '<div class="card-header" onclick="toggleTable(this)">' +
+    '<div>' +
     '<div class="card-tags-row"><div class="card-tag">TABLE</div>' +
     (c.tag ? '<span class="card-source-tag">' + esc(c.tag) + '</span>' : '') + '</div>' +
     '<div class="card-title-text">' + hl(esc(c.title), hl_term) + '</div>' +
-    '</div></div>' +
-    '<div style="overflow-x:auto;"><table class="kr-table">' +
+    '</div>' +
+    '<span class="table-toggle">[-]</span>' +
+    '</div>' +
+    '<div class="table-body"><div style="overflow-x:auto;"><table class="kr-table">' +
     '<thead><tr>' + headers.map(function(h){ return '<th>' + esc(h) + '</th>'; }).join('') + '</tr></thead>' +
     '<tbody>' + rows.map(function(row){
       return '<tr>' + row.map(function(cell, i){
-        var cls = i === 0 ? 'kr-char' : i === 1 ? 'kr-rom' : (i === row.length - 1 && headers.length > 3 ? 'kr-note' : '');
+        var isKrFirst = i === 0 && /[\uAC00-\uD7AF\u3131-\u318E]/.test(cell);
+        var isKrSecond = i === 1 && /^[a-zA-Z\s\-\/\(\)]+$/.test(cell.trim());
+        var cls = isKrFirst ? 'kr-char' : isKrSecond ? 'kr-rom' : (i === row.length - 1 && headers.length > 3 ? 'kr-note' : '');
         return '<td class="' + cls + '">' + hl(esc(cell), hl_term) + '</td>';
       }).join('') + '</tr>';
     }).join('') + '</tbody>' +
-    '</table></div></div>';
+    '</table></div></div></div>';
+}
+
+function renderVocabCard(c, hl_term) {
+  if (!c.vocabData) return renderRuleCard(c, hl_term);
+  return '<div class="table-card" style="grid-column:1/-1;">' +
+    '<div class="card-header" onclick="toggleTable(this)">' +
+    '<div>' +
+    '<div class="card-tags-row"><div class="card-tag">VOCAB</div>' +
+    (c.tag ? '<span class="card-source-tag">' + esc(c.tag) + '</span>' : '') + '</div>' +
+    '<div class="card-title-text">' + hl(esc(c.title), hl_term) + '</div>' +
+    '</div>' +
+    '<span class="table-toggle">[-]</span>' +
+    '</div>' +
+    '<div class="table-body"><div class="vocab-grid">' +
+    c.vocabData.map(function(v) {
+      var parts = v.kr.split('\n');
+      var main = parts[0];
+      var sub = parts[1] || '';
+      var hasPrefix = v.prefix;
+      var krContent = hasPrefix
+        ? '<div class="vocab-kr-row">' +
+          '<span class="vocab-prefix">' + esc(v.prefix).replace(/\n/g, '<br>') + '</span>' +
+          '<span class="vocab-kr">' + hl(esc(main), hl_term) + '</span>' +
+          '</div>'
+        : '<div class="vocab-kr">' + hl(esc(main), hl_term) +
+          (v.star ? '<span class="vocab-star"> *</span>' : '') + '</div>';
+      return '<div class="vocab-card">' +
+        krContent +
+        (sub ? '<div class="vocab-kr-sub">' + hl(esc(sub), hl_term) + '</div>' : '') +
+        (v.origin ? '<div class="vocab-origin">' + esc(v.origin) + '</div>' : '') +
+        '<div class="vocab-en">' + hl(esc(v.en), hl_term) + '</div>' +
+        '</div>';
+    }).join('') +
+    '</div>' +
+    (c.vocabNote ? '<div class="vocab-note">' + esc(c.vocabNote).replace(/\n/g, '<br>') + '</div>' : '') +
+    '</div></div>';
+}
+
+function toggleTable(header) {
+  var card = header.closest('.table-card');
+  var toggle = header.querySelector('.table-toggle');
+  card.classList.toggle('collapsed');
+  toggle.textContent = card.classList.contains('collapsed') ? '[+]' : '[-]';
 }
 
 function esc(s) {
@@ -636,45 +784,14 @@ function switchCat(el) {
   document.querySelectorAll('.sidebar-item').forEach(function(i){ i.classList.remove('active'); });
   el.classList.add('active');
   currentCat = el.dataset.cat;
+  currentTab = 'all';
   var meta = CAT_META[currentCat];
   document.getElementById('mainTitle').innerHTML = meta.title;
   document.getElementById('mainSubtitle').textContent = meta.subtitle;
+  renderTabs();
   renderCards();
   document.getElementById('main').scrollTop = 0;
   if (!sidebarPinned && !sidebarCollapsed) collapseSidebar();
-}
-
-// ── ADD / DELETE ──────────────────────────────────────────────────────────────
-function addCard() {
-  var title = document.getElementById('inputTitle').value.trim();
-  if (!title) { document.getElementById('inputTitle').focus(); return; }
-  var card = {
-    id: 'u' + Date.now(),
-    type: document.getElementById('inputTag').value,
-    title: title,
-    formula:   document.getElementById('inputFormula').value.trim(),
-    explain:   document.getElementById('inputExplain').value.trim(),
-    ex1:       document.getElementById('inputEx1').value.trim(),
-    ex2:       document.getElementById('inputEx2').value.trim(),
-    exception: document.getElementById('inputException').value.trim(),
-  };
-  if (!data[currentCat]) data[currentCat] = [];
-  data[currentCat].push(card);
-  save(data);
-  ['inputTitle','inputFormula','inputExplain','inputEx1','inputEx2','inputException']
-    .forEach(function(id){ document.getElementById(id).value = ''; });
-  renderAll();
-}
-
-function deleteCard(id) {
-  if (!confirm('Delete this card?')) return;
-  ALL_CATS.forEach(function(cat){ data[cat] = (data[cat] || []).filter(function(c){ return c.id !== id; }); });
-  save(data);
-  renderAll();
-}
-
-function scrollToAdd() {
-  document.getElementById('addPanel').scrollIntoView({ behavior: 'smooth' });
 }
 
 // ── SIDEBAR ───────────────────────────────────────────────────────────────────

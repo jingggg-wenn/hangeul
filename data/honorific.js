@@ -69,15 +69,6 @@ var HONORIFIC_DATA = [
     exception: '께서 is only for living, respected people. Do not use for objects or for people you don\'t need to honour.'
   },
   {
-    id: 'hon_r2', tag: 'pre-populated', type: 'rule',
-    title: 'Honorific Verb Infix -(으)시-',
-    formula: 'verb stem + 으시 (after FC) / 시 (after V) + tense ending',
-    explain: 'Insert -(으)시- between the verb stem and the tense/mood ending to show respect to the subject of the verb.',
-    ex1: '가다 → 가시다 → 가세요 / 가셨어요',
-    ex2: '읽다 → 읽으시다 → 읽으세요 / 읽으셨어요',
-    exception: 'Some verbs have dedicated honorific forms rather than using -(으)시-: 먹다/마시다 → 드시다, 있다 → 계시다, 자다 → 주무시다, 말하다 → 말씀하시다, 죽다 → 돌아가시다.'
-  },
-  {
     id: 'hon_r3', tag: 'pre-populated', type: 'rule',
     title: 'Formal Polite Endings (합쇼체)',
     formula: 'verb stem + 습니다 (after FC) / ㅂ니다 (after V)  |  questions: 습니까 / ㅂ니까',
