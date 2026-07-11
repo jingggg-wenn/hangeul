@@ -95,22 +95,14 @@ var COUNTING_DATA = [
     ex2: '학교 앞에서 만나요. (Let\'s meet in front of the school.)',
     exception: 'Use 에 for static location (있다/없다) and 에서 for action location. 사이 requires two nouns: A 하고 B 사이에 (between A and B).'
   },
+
   {
-    id: 'c_r3', tag: 'B2T2', type: 'rule', group: 'time-grammar',
-    title: 'Duration Marker — For Time Period (동안)',
-    formula: '<time period> + 동안 + <action verb / noun>',
-    explain: 'The time duration always comes first in a sentence. 동안 means "for" or "during" a period of time. Place the time expression before 동안, then follow with the verb or action. Korean word order puts the duration at the front of the clause, not at the end like in English.',
-    ex1: '두 시간 동안 공부했어요. (I studied for two hours.)',
-    ex2: '방학 동안 여행했어요. (I travelled during the vacation.)',
-    exception: 'For approximate durations, add 쯤: 한 시간쯤 동안 (for about one hour). 동안 can be omitted when the duration is obvious from context: 삼 년 살았어요 (I lived there for 3 years).'
-  },
-  {
-    id: 'c_r4', tag: 'B2T2', type: 'rule', group: 'time-grammar',
+    id: 'c_r4', tag: 'B1T2', type: 'rule', group: 'time-grammar',
     title: 'Time (시간 말하기)',
     formula: '<Kor Num> 시 + <Chi Num> 분 + 이에요',
     explain: 'Hours use Korean numerals with 시, minutes use Sino-Korean numerals with 분. Combine both to tell the full time. 30 minutes can be replaced with 반 (half).',
-    ex1: '세 시 이십 분이에요. (It is 3:20.)',
-    ex2: '두 시 반이에요. (It is 2:30.)',
+    ex1: '두 시 반이에요. (It is 2:30.)',
+    ex2: '오전 아홉 시. (9 AM) / 오후 세 시. (3 PM)',
     exception: 'AM = 오전, PM = 오후. Place before the time: 오후 세 시 (3 PM). To ask the time: 몇 시예요? (What time is it?). 30 minutes = 반: 한 시 반 (1:30).'
   },
   {
@@ -121,6 +113,14 @@ var COUNTING_DATA = [
     ex1: '세 시에 만나요. (Let\'s meet at 3 o\'clock.)',
     ex2: '월요일에 학교에 가요. (I go to school on Monday.)',
     exception: 'Do not use 에 with relative time words: 어제, 오늘, 내일, 매일, 매달, 매년. These function as adverbs on their own. e.g. 오늘 학교에 가요. (I go to school today.)'
+  },  {
+    id: 'c_r3', tag: 'B2T2', type: 'rule', group: 'time-grammar',
+    title: 'Duration Marker — For Time Period (동안)',
+    formula: '<time period> + 동안 + <action verb / noun>',
+    explain: 'The time duration always comes first in a sentence. 동안 means "for" or "during" a period of time. Place the time expression before 동안, then follow with the verb or action. Korean word order puts the duration at the front of the clause, not at the end like in English.',
+    ex1: '두 시간 동안 공부했어요. (I studied for two hours.)',
+    ex2: '방학 동안 여행했어요. (I travelled during the vacation.)',
+    exception: 'For approximate durations, add 쯤: 한 시간쯤 동안 (for about one hour). 동안 can be omitted when the duration is obvious from context: 삼 년 살았어요 (I lived there for 3 years).'
   },
   {
     id: 'c_v4', tag: 'B2T2', type: 'vocab', group: 'time-grammar',

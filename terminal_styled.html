@@ -364,7 +364,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-ser
 .vocab-star { color: var(--rule-change); font-size: 10px; vertical-align: super; font-weight: 700; }
 .vocab-origin {
   font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 400;
-  color: #e05555; margin-top: 2px; letter-spacing: 0.04em;
+  color: #5599e0; margin-top: 2px; letter-spacing: 0.04em;
 }
 .vocab-note {
   font-family: 'JetBrains Mono', monospace; font-size: 11px;
@@ -464,8 +464,6 @@ select.add-input { cursor: pointer; }
   </div>
 
   <div class="topbar-right">
-    <div class="mastery-label">MASTERY &nbsp;<strong id="masteryPct">0%</strong></div>
-    <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
     <div class="toggle-btn" id="toggleBtn" title="Toggle light/dark">&#9680;</div>
   </div>
 </div>
@@ -506,7 +504,7 @@ select.add-input { cursor: pointer; }
       <div class="sidebar-item" data-cat="counting" onclick="switchCat(this)">
         <div class="sidebar-glyph">수</div>
         <div class="sidebar-text">
-          <div class="sidebar-name">Counting, Units &amp; Positional</div>
+          <div class="sidebar-name">Counting</div>
           <div class="sidebar-count" id="count-counting">0 rules</div>
         </div>
       </div>
@@ -518,16 +516,6 @@ select.add-input { cursor: pointer; }
         </div>
       </div>
 
-      <div class="sidebar-divider"></div>
-      <div class="sidebar-section-label">Progress</div>
-      <div class="progress-section">
-        <div style="font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--text3); margin-bottom:6px;">
-          Total cards: <span id="totalCards" style="color:var(--accent)">0</span>
-        </div>
-        <div style="font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--text3);">
-          Streak: <span style="color:var(--accent)">-</span>
-        </div>
-      </div>
     </div>
   </div>
 
@@ -566,7 +554,7 @@ var CAT_META = {
   hangeul:       { title: '<span>가나다</span> Hangeul Alphabets',  subtitle: 'consonants · vowels · syllable blocks' },
   pronunciation: { title: '<span>발음</span> Pronunciation Rules',  subtitle: '받침 · liaison · nasalisation · tensification' },
   grammar:       { title: '<span>문법</span> Grammar Rules',        subtitle: 'particles · tense · connectors · negation' },
-  counting:      { title: '<span>수</span> Counting, Units &amp; Positional', subtitle: 'native · sino-korean · counters · time · dates · positional words' },
+  counting:      { title: '<span>수</span> Counting', subtitle: 'native · sino-korean · counters · time · dates · positional words' },
   honorific:     { title: '<span>존댓말</span> Honorific Forms',    subtitle: 'speech levels · (으)시 · humble forms · 합쇼체' },
 };
 
@@ -574,7 +562,7 @@ var CAT_LABELS = {
   hangeul: 'Hangeul Alphabets',
   pronunciation: 'Pronunciation',
   grammar: 'Grammar',
-  counting: 'Counting, Units & Positional',
+  counting: 'Counting',
   honorific: 'Honorific Forms',
 };
 
@@ -691,7 +679,8 @@ function renderRuleCard(c, hl_term) {
     (c.explain ? '<div class="card-explain">' + hl(esc(c.explain), hl_term) + '</div>' : '') +
     ((c.ex1 || c.ex2) ? '<div class="examples-label">Examples</div>' +
       (c.ex1 ? '<div class="example-row">' + hl(esc(c.ex1), hl_term) + '</div>' : '') +
-      (c.ex2 ? '<div class="example-row">' + hl(esc(c.ex2), hl_term) + '</div>' : '') : '') +
+      (c.ex2 ? '<div class="example-row">' + hl(esc(c.ex2), hl_term) + '</div>' : '') +
+      (c.ex3 ? '<div class="example-row">' + hl(esc(c.ex3), hl_term) + '</div>' : '') : '') +
     (c.exception ? '<div class="exception-block"><div class="exception-label">Exception / Note</div><div class="exception-text">' + hl(esc(c.exception), hl_term) + '</div></div>' : '') +
     '</div></div>';
 }
@@ -848,8 +837,9 @@ searchInput.addEventListener('input', function() {
   var found = [];
   ALL_CATS.forEach(function(cat) {
     (data[cat] || []).forEach(function(c) {
-      var haystack = [c.title, c.formula, c.explain, c.ex1, c.ex2, c.exception].filter(Boolean).join(' ').toLowerCase();
+      var haystack = [c.title, c.formula, c.explain, c.ex1, c.ex2, c.ex3, c.exception, c.vocabNote].filter(Boolean).join(' ').toLowerCase();
       if (c.tableData) c.tableData.rows.forEach(function(r){ haystack += ' ' + r.join(' ').toLowerCase(); });
+      if (c.vocabData) c.vocabData.forEach(function(v){ haystack += ' ' + [v.kr, v.en, v.origin, v.prefix].filter(Boolean).join(' ').toLowerCase(); });
       if (haystack.includes(q)) found.push({ cat: cat, card: c });
     });
   });
