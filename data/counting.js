@@ -95,6 +95,15 @@ var COUNTING_DATA = [
     ex2: '학교 앞에서 만나요. (Let\'s meet in front of the school.)',
     exception: 'Use 에 for static location (있다/없다) and 에서 for action location. 사이 requires two nouns: A 하고 B 사이에 (between A and B).'
   },
+  {
+    id: 'c_r7', tag: 'B1T2', type: 'rule', group: 'positional',
+    title: 'Place Marker - To (에)',
+    formula: '<place noun> + 에 + 가다/오다',
+    explain: 'Use 에 after a place noun to indicate the destination when used with movement verbs like 가다 (to go) or 오다 (to come). Time always comes before place in Korean sentence order.',
+    ex1: '학교에 가요. (I go to school.)',
+    ex2: '세 시에 학교에 가요. (I go to school at 3 o\'clock.)',
+    exception: 'Question word: 어디에 가요? (Where are you going?). Remember sentence order: Time + Place + Verb. e.g. 내일 학교에 가요. (Tomorrow I go to school.)'
+  },
 
   {
     id: 'c_r4', tag: 'B1T2', type: 'rule', group: 'time-grammar',
@@ -107,10 +116,10 @@ var COUNTING_DATA = [
   },
   {
     id: 'c_r6', tag: 'B1T2', type: 'rule', group: 'time-grammar',
-    title: 'Time Marker (에)',
-    formula: 'Time Noun + 에 + Verb',
+    title: 'Time Marker - At (에)',
+    formula: '<time> + 에 + <action verb>',
     explain: 'Attach the particle 에 to a time noun to mark when an action happens. The time expression comes before the verb in Korean word order.',
-    ex1: '세 시에 만나요. (Let\'s meet at 3 o\'clock.)',
+    ex1: '오전 아홉 시 오십 분에 출발해요. (Let\'s set our journey at 9:50 AM.)',
     ex2: '월요일에 학교에 가요. (I go to school on Monday.)',
     exception: 'Do not use 에 with relative time words: 어제, 오늘, 내일, 매일, 매달, 매년. These function as adverbs on their own. e.g. 오늘 학교에 가요. (I go to school today.)'
   },  {
