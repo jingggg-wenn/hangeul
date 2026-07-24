@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>한국어Learn</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%230e0e0e'/><rect x='1' y='1' width='30' height='30' rx='3' fill='none' stroke='%23c8f135' stroke-width='1.5'/><text x='16' y='22' text-anchor='middle' font-family='monospace' font-size='16' font-weight='700' fill='%23c8f135'>가</text></svg>" />
+<style>
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: #0e0e0e; color: #e8e8e8;
+  font-family: 'JetBrains Mono', monospace;
+  display: flex; align-items: center; justify-content: center;
+  height: 100vh;
+}
+
+.login-box {
+  background: #141414; border: 1px solid #252525; border-radius: 8px;
+  padding: 36px 32px; width: 100%; max-width: 480px; text-align: center;
+}
+
+.login-ascii {
+  font-size: 10px; line-height: 1.2; color: #c8f135; margin-bottom: 16px;
+  white-space: pre; letter-spacing: 0.05em;
+}
+
+.login-hangul {
+  text-align: center; font-size: 14px; color: #c8f135;
+  margin-top: 4px; margin-bottom: 12px; letter-spacing: 0.3em;
+}
+
+.login-title {
+  font-size: 18px; font-weight: 700; color: #e8e8e8;
+  letter-spacing: 0.04em; margin-bottom: 4px;
+}
+.login-title span { color: #c8f135; }
+
+.login-sub {
+  font-size: 11px; color: #555; margin-bottom: 24px;
+}
+
+.input-wrap {
+  position: relative; margin-bottom: 12px;
+}
+.login-input {
+  width: 100%; padding: 10px 60px 10px 12px; background: #0e0e0e;
+  border: 1px solid #252525; border-radius: 5px;
+  color: #e8e8e8; font-family: 'JetBrains Mono', monospace;
+  font-size: 13px; outline: none; transition: border-color 0.15s;
+}
+.login-input:focus { border-color: #c8f135; }
+.input-icons {
+  position: absolute; right: 8px; top: 50%; transform: translateY(-50%);
+  display: flex; gap: 4px;
+}
+.input-icon-btn {
+  background: none; border: none; color: #555; cursor: pointer;
+  font-family: 'JetBrains Mono', monospace; font-size: 11px;
+  padding: 2px 4px; border-radius: 3px; transition: color 0.15s;
+}
+.input-icon-btn:hover { color: #c8f135; }
+
+.login-btn {
+  width: 100%; padding: 10px; background: #c8f135; color: #0e0e0e;
+  border: none; border-radius: 5px;
+  font-family: 'JetBrains Mono', monospace; font-size: 12px;
+  font-weight: 700; cursor: pointer; transition: opacity 0.15s;
+}
+.login-btn:hover { opacity: 0.85; }
+
+.login-error {
+  font-size: 11px; color: #e05555; margin-top: 10px; min-height: 16px;
+}
+</style>
+</head>
+<body>
+
+<div class="login-box">
+  <pre class="login-ascii" id="asciiBanner"></pre>
+  <div class="login-hangul" id="hangulLine"></div>
+  <div class="login-title">한국어<span>Learn</span></div>
+  <p class="login-sub">Enter password to continue</p>
+  <div class="input-wrap">
+    <input type="password" id="loginPw" class="login-input" placeholder="Password" autocomplete="off" autofocus />
+    <div class="input-icons">
+      <button class="input-icon-btn" id="clearBtn" title="Clear">[x]</button>
+      <button class="input-icon-btn" id="eyeBtn" title="Show/hide password">[*]</button>
+    </div>
+  </div>
+  <button class="login-btn" id="loginBtn">Enter</button>
+  <p class="login-error" id="loginError"></p>
+</div>
+
+<script>
+if (localStorage.getItem('hg-auth') === 'true') {
+  location.href = 'terminal_styled.html';
+}
+
+var pw = document.getElementById('loginPw');
+var err = document.getElementById('loginError');
+
+function attempt() {
+  if (pw.value === 'hangeul') {
+    localStorage.setItem('hg-auth', 'true');
+    location.href = 'terminal_styled.html';
+  } else {
+    err.textContent = 'Wrong password';
+    pw.value = '';
+  }
+}
+
+document.getElementById('loginBtn').addEventListener('click', attempt);
+pw.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') attempt();
+});
+
+document.getElementById('clearBtn').addEventListener('click', function() {
+  pw.value = '';
+  pw.focus();
+});
+
+document.getElementById('eyeBtn').addEventListener('click', function() {
+  var isHidden = pw.type === 'password';
+  pw.type = isHidden ? 'text' : 'password';
+  this.textContent = isHidden ? '[o]' : '[*]';
+  pw.focus();
+});
+
+var banner = [
+  '+----------------------------------------------+',
+  '|                                              |',
+  '|    _                                    _     |',
+  '|   | |__   __ _ _ __    __ _  ___ _   _| |    |',
+  "|   | '_ \\ / _` | '_ \\  / _` |/ _ \\ | | | |    |",
+  '|   | | | | (_| | | | || (_| |  __/ |_| | |    |',
+  '|   |_| |_|\\__,_|_| |_| \\__, |\\___|\\__,_|_|    |',
+  '|                        |___/                  |',
+  '|                                              |',
+  '+----------------------------------------------+'
+];
+document.getElementById('asciiBanner').textContent = banner.join('\n');
+document.getElementById('hangulLine').textContent = '\uD55C \uAE00';
+</script>
+</body>
+</html>

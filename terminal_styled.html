@@ -465,6 +465,7 @@ select.add-input { cursor: pointer; }
 
   <div class="topbar-right">
     <div class="toggle-btn" id="toggleBtn" title="Toggle light/dark">&#9680;</div>
+    <div class="toggle-btn" onclick="localStorage.removeItem('hg-auth');location.href='index.html';" title="Logout" style="font-size:11px; letter-spacing:-1px;">[-&gt;</div>
   </div>
 </div>
 
@@ -545,6 +546,8 @@ select.add-input { cursor: pointer; }
 </div>
 
 <script>
+if (localStorage.getItem('hg-auth') !== 'true') { location.href = 'index.html'; }
+
 // ── CONFIG ────────────────────────────────────────────────────────────────────
 // To add a new category: add a data file in data/, add an entry here, add a sidebar item in HTML.
 
