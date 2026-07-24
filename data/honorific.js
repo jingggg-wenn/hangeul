@@ -3,7 +3,7 @@ var HONORIFIC_DATA = [
   {
     id: 'hon_r6', tag: 'B2T1', type: 'rule',
     title: 'Honorific Noun Present Tense (이세요/세요)',
-    formula: 'Noun + 이세요 (FC)\nNoun + 세요 (V)',
+    formula: '<noun> + 이세요 (FC)\n<noun> + 세요 (V)',
     explain: 'To say "is [noun]" in honorific polite speech, attach 이세요 after a noun ending in a FC (final consonant), or 세요 directly after a noun ending in a V (vowel). This is the honorific equivalent of 이에요/예요.',
     ex1: '선생님이세요? (Are you a teacher? — 님 ends in FC ㅁ)',
     ex2: '의사세요? (Are you a doctor? — 사 ends in V)',
@@ -12,7 +12,7 @@ var HONORIFIC_DATA = [
   {
     id: 'hon_r7', tag: 'B2T1', type: 'rule',
     title: 'Honorific Noun Past Tense (이셨어요/셨어요)',
-    formula: 'Noun + 이셨어요 (FC)\nNoun + 셨어요 (V)',
+    formula: '<noun> + 이셨어요 (FC)\n<noun> + 셨어요 (V)',
     explain: 'To say "was [noun]" in honorific polite speech, attach 이셨어요 after a noun ending in a FC (final consonant), or 셨어요 directly after a noun ending in a V (vowel). This is the past-tense counterpart of 이세요/세요.',
     ex1: '선생님이셨어요. (He/She was a teacher. — 님 ends in FC ㅁ)',
     ex2: '의사셨어요. (He/She was a doctor. — 사 ends in V)',

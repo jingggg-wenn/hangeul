@@ -14,7 +14,7 @@ body {
   background: #0e0e0e; color: #e8e8e8;
   font-family: 'JetBrains Mono', monospace;
   display: flex; align-items: center; justify-content: center;
-  height: 100vh;
+  height: 100vh; padding: 16px;
 }
 
 .login-box {
@@ -73,6 +73,19 @@ body {
 
 .login-error {
   font-size: 11px; color: #e05555; margin-top: 10px; min-height: 16px;
+}
+
+@media (max-width: 520px) {
+  .login-box { padding: 28px 20px; }
+  .login-ascii { font-size: 7px; letter-spacing: 0; }
+  .login-hangul { font-size: 12px; }
+  .login-title { font-size: 16px; }
+  .login-input { font-size: 16px; }
+}
+
+@media (max-width: 380px) {
+  .login-ascii { font-size: 5.5px; }
+  .login-box { padding: 24px 14px; }
 }
 </style>
 </head>

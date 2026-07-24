@@ -371,10 +371,64 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-ser
   color: var(--rule-change); line-height: 1.6; padding: 10px 18px 16px;
   border-top: 1px solid var(--border);
 }
+.mobile-menu-btn { display: none; }
+.sidebar-overlay {
+  display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 50;
+}
+.sidebar-overlay.open { display: block; }
+
+@media (max-width: 768px) {
+  .mobile-menu-btn { display: flex; }
+  .sidebar {
+    position: fixed; left: -260px; top: 0; bottom: 0; z-index: 60;
+    width: 240px; transition: left 0.25s ease;
+  }
+  .sidebar.mobile-open { left: 0; }
+  .topbar { padding: 0 12px; gap: 8px; }
+  .topbar-search-hint { display: none; }
+  .main-header { padding: 16px 16px 12px; }
+  .main-title { font-size: 18px; }
+  .main-subtitle { font-size: 10px; }
+  .tab-bar { padding: 0 12px; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  .tab-bar::-webkit-scrollbar { display: none; }
+  .tab-bar.visible { display: flex; flex-wrap: nowrap; }
+  .tab-btn { font-size: 10px; padding: 8px 10px; white-space: nowrap; flex-shrink: 0; }
+  .card-grid { padding: 14px 12px; grid-template-columns: 1fr; gap: 12px; }
+  .legend { padding: 8px 12px; gap: 8px; font-size: 9px; }
+  .tab-bar { top: 62px; }
+  .rule-card:hover { transform: none; }
+  .search-dropdown { max-width: 100%; width: calc(100vw - 24px); }
+}
+
 @media (max-width: 480px) {
   .vocab-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; padding: 12px 14px; }
   .vocab-kr { font-size: 18px; }
   .vocab-kr-sub { font-size: 11px; }
+  .topbar { height: 48px; gap: 6px; }
+  .topbar-right { gap: 6px; }
+  .logo { font-size: 14px; }
+  .topbar-search-inner { height: 32px; padding: 5px 12px; }
+  .topbar-search-input { font-size: 12px; }
+  .toggle-btn { width: 28px; height: 28px; font-size: 12px; }
+  .tab-bar { top: 52px; }
+  .vocab-grid { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+  .card-header { padding: 10px 12px 8px; }
+  .card-title-text { font-size: 12px; }
+  .card-body { padding: 10px 12px; }
+  .card-explain { font-size: 11px; }
+  .vocab-card { padding: 12px 8px; }
+  .search-dropdown { left: 0; transform: none; width: calc(100vw - 16px); }
+  .kr-table th, .kr-table td { padding: 6px 8px; font-size: 10px; }
+  .table-card { overflow-x: auto; }
+  .main-header { padding: 12px 12px 10px; }
+  .main-title { font-size: 16px; }
+  .card-grid { padding: 10px 8px; gap: 10px; }
+  .formula { font-size: 12px; padding: 10px 14px; }
+  .explain-text { font-size: 11px; padding: 10px 14px; }
+  .example-row { font-size: 11px; padding: 6px 14px; }
+  .exception-text { font-size: 10px; }
+  .kr-table { font-size: 10px; }
+  .vocab-note { font-size: 10px; padding: 8px 12px; }
 }
 
 /* TABLE CARD */
@@ -448,6 +502,7 @@ select.add-input { cursor: pointer; }
 <body>
 
 <div class="topbar">
+  <div class="toggle-btn mobile-menu-btn" id="mobileMenuBtn" title="Menu" style="font-size:11px;">[=]</div>
   <div class="logo">한국어<span>Learn</span></div>
 
   <div class="topbar-search-wrap">
@@ -468,6 +523,8 @@ select.add-input { cursor: pointer; }
     <div class="toggle-btn" onclick="localStorage.removeItem('hg-auth');location.href='index.html';" title="Logout" style="font-size:11px; letter-spacing:-1px;">[-&gt;</div>
   </div>
 </div>
+
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
 
 <div class="layout">
 
@@ -905,6 +962,28 @@ document.addEventListener('keydown', function(e) {
 document.getElementById('toggleBtn').addEventListener('click', function() {
   document.body.classList.toggle('light');
 });
+
+var mobileMenuBtn = document.getElementById('mobileMenuBtn');
+var sidebarOverlay = document.getElementById('sidebarOverlay');
+
+function closeMobileMenu() {
+  sidebar.classList.remove('mobile-open');
+  sidebarOverlay.classList.remove('open');
+}
+
+mobileMenuBtn.addEventListener('click', function() {
+  if (sidebar.classList.contains('collapsed')) sidebar.classList.remove('collapsed');
+  sidebar.classList.toggle('mobile-open');
+  sidebarOverlay.classList.toggle('open');
+});
+
+sidebarOverlay.addEventListener('click', closeMobileMenu);
+
+var origSwitchCat = switchCat;
+switchCat = function(el) {
+  origSwitchCat(el);
+  if (window.innerWidth <= 768) closeMobileMenu();
+};
 
 renderAll();
 </script>

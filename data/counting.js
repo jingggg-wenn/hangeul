@@ -89,8 +89,8 @@ var COUNTING_DATA = [
   {
     id: 'c_r2', tag: 'B1T2', type: 'rule', group: 'positional',
     title: 'Positional Marker (에)',
-    formula: 'Noun + positional word + 에 + [Noun + 이/가 + 있어요/없어요]',
-    explain: 'All positional words must be used with the place marker 에 to indicate location. The noun comes first, followed by the positional word, then 에.',
+    formula: '<place noun> + <positional word> + 에 + [<Noun> + 이/가 + 있어요/없어요]',
+    explain: 'All positional words must be used with the place marker 에 to indicate location. The place noun comes first, followed by the positional word, then 에.',
     ex1: '책상 위에 있어요. (It is on top of the desk.)',
     ex2: '학교 앞에서 만나요. (Let\'s meet in front of the school.)',
     exception: 'Use 에 for static location (있다/없다) and 에서 for action location. 사이 requires two nouns: A 하고 B 사이에 (between A and B).'
