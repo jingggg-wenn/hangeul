@@ -1,6 +1,14 @@
 // data/vocab.js — General vocabulary cards
 var VOCAB_DATA = [
   {
+    id: 'v_r1', tag: 'B1T1', type: 'rule', group: 'adjectives',
+    title: 'General Rule of Thumb: Verbs vs Adjectives',
+    formula: 'To <verb> → Action Verb (동사)\nTo be <verb> → Adjective (형용사)',
+    explain: 'Verbs are action words, adjectives are descriptive words. In Korean, both conjugate the same way. Quick tell in English: "to be ___" = adjective, "to ___" = action verb.',
+    ex1: '먹다 (to eat) → Action Verb',
+    ex2: '크다 (to be big) → Adjective',
+  },
+  {
     id: 'v_v1', tag: 'B2T2', type: 'vocab', group: 'colours',
     title: 'Colours (색/색깔)',
     vocabData: [
@@ -17,5 +25,47 @@ var VOCAB_DATA = [
       { kr: '회색', en: 'Grey', color: '#999999' },
     ],
     vocabNote: '색 and 색깔 both mean "colour". When used as adjectives before nouns, drop 색: 빨간 사과 (red apple), 파란 하늘 (blue sky), 하얀 구름 (white cloud).'
+  },
+  {
+    id: 'v_v2', tag: 'B2T2', type: 'vocab', group: 'adjectives',
+    title: 'Common Paired Adjectives (형용사)',
+    paired: true,
+    vocabData: [
+      { kr: '작다', en: 'To be small' },
+      { arrow: true },
+      { kr: '크다', en: 'To be big' },
+      { kr: '낮다\n(낮아요)', en: 'To be low' },
+      { arrow: true },
+      { kr: '높다\n(높아요)', en: 'To be high/tall' },
+      { kr: '얇다\n(얇아요)', en: 'To be thin' },
+      { arrow: true },
+      { kr: '두껍다', en: 'To be thick' },
+      { kr: '짧다\n(짧아요)', en: 'To be short (length)' },
+      { arrow: true },
+      { kr: '길다', en: 'To be long' },
+      { kr: '느리다', en: 'To be slow' },
+      { arrow: true },
+      { kr: '빠르다', en: 'To be fast' },
+      { kr: '조용하다', en: 'To be quiet' },
+      { arrow: true },
+      { kr: '시끄럽다', en: 'To be noisy/loud' },
+      { kr: '무섭다', en: 'To be scary' },
+      { arrow: true },
+      { kr: '편하다', en: 'To be comfortable' },
+    ],
+    vocabNote: 'Korean adjectives function like verbs (they conjugate). The dictionary form ends in 다. To use before a noun, drop 다 and add the appropriate ending.\nTo say someone is tall: 키가 크다 (키가 커요). To say someone is short: 키가 작다 (키가 작아요).'
+  },
+  {
+    id: 'v_v3', tag: 'B2T2', type: 'vocab', group: 'adjectives',
+    title: 'More Common Adjectives (형용사)',
+    vocabData: [
+      { kr: '귀엽다', en: 'To be cute' },
+      { kr: '똑똑하다', en: 'To be smart' },
+      { kr: '', en: '' },
+      { kr: '', en: '' },
+      { kr: '', en: '' },
+      { kr: '', en: '' },
+    ],
+    vocabNote: ''
   },
 ];

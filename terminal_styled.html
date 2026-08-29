@@ -122,10 +122,6 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-ser
 
 /* TOPBAR RIGHT */
 .topbar-right { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
-.mastery-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text3); letter-spacing: 0.08em; }
-.mastery-label strong { color: var(--accent); }
-.progress-track { width: 100px; height: 3px; background: var(--border2); border-radius: 2px; }
-.progress-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.4s; }
 .toggle-btn {
   width: 32px; height: 32px; border: 1px solid var(--border2); background: var(--bg3);
   border-radius: 5px; cursor: pointer; display: flex; align-items: center; justify-content: center;
@@ -170,14 +166,6 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-ser
 
 .sidebar-scroll { flex: 1; overflow-y: auto; overflow-x: hidden; }
 
-.sidebar-section-label {
-  padding: 16px 14px 6px;
-  font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.14em;
-  color: var(--text3); text-transform: uppercase; white-space: nowrap;
-  transition: opacity 0.15s;
-}
-.sidebar.collapsed .sidebar-section-label { opacity: 0; }
-
 .sidebar-item {
   display: flex; align-items: center; gap: 12px;
   padding: 11px 14px; cursor: pointer;
@@ -200,10 +188,6 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-ser
 .sidebar-item.active .sidebar-name { color: var(--text); }
 .sidebar-count { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text3); margin-top: 1px; }
 .sidebar-item.active .sidebar-count { color: var(--accent-dim); }
-.sidebar-divider { height: 1px; background: var(--border); margin: 6px 0; transition: opacity 0.15s; }
-.sidebar.collapsed .sidebar-divider { opacity: 0; }
-.progress-section { transition: opacity 0.15s; padding: 8px 14px 20px; }
-.sidebar.collapsed .progress-section { opacity: 0; pointer-events: none; }
 
 /* MAIN */
 .main { flex: 1; overflow-y: auto; display: flex; flex-direction: column; }
@@ -216,12 +200,6 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-ser
 .main-title span { color: var(--accent); }
 .main-subtitle { font-size: 12px; color: var(--text3); margin-top: 4px; }
 .main-actions { display: flex; gap: 8px; }
-.btn-add {
-  background: var(--accent); color: #0e0e0e; border: none; border-radius: 5px;
-  padding: 8px 16px; font-weight: 700; font-size: 12px; cursor: pointer;
-  font-family: 'Inter', sans-serif; transition: opacity 0.15s;
-}
-.btn-add:hover { opacity: 0.85; }
 
 /* TAB BAR */
 .tab-bar {
@@ -375,6 +353,18 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-ser
   color: var(--rule-change); line-height: 1.6; padding: 10px 18px 16px;
   border-top: 1px solid var(--border);
 }
+.vocab-grid-paired {
+  display: flex; flex-direction: column; gap: 8px;
+  padding: 16px 18px; max-width: 720px; margin: 0 auto;
+}
+.vocab-pair-row {
+  display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%;
+}
+.vocab-pair-row .vocab-card { flex: 1; max-width: 240px; }
+.vocab-pair-arrow {
+  font-family: 'JetBrains Mono', monospace; font-size: 13px;
+  color: var(--rule-change); flex-shrink: 0; letter-spacing: -1px;
+}
 .mobile-menu-btn { display: none; }
 .sidebar-overlay {
   display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 50;
@@ -421,6 +411,10 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-ser
   .card-body { padding: 10px 12px; }
   .card-explain { font-size: 11px; }
   .vocab-card { padding: 12px 8px; }
+  .vocab-grid-paired { gap: 6px; padding: 12px 10px; }
+  .vocab-pair-row { gap: 6px; }
+  .vocab-pair-row .vocab-card { padding: 10px 6px; }
+  .vocab-pair-arrow { font-size: 11px; }
   .search-dropdown { left: 0; transform: none; width: calc(100vw - 16px); }
   .kr-table th, .kr-table td { padding: 6px 8px; font-size: 10px; }
   .table-card { overflow-x: auto; }
@@ -463,28 +457,6 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-ser
 .kr-table .kr-char { font-size: 16px; font-weight: 600; color: var(--accent); }
 .kr-table .kr-rom { color: var(--text2); font-size: 11px; }
 .kr-table .kr-note { color: var(--rule-explain); font-size: 11px; }
-
-/* ADD PANEL */
-.add-panel {
-  margin: 0 28px 28px; background: var(--bg2); border: 1px dashed var(--border2);
-  border-radius: 8px; padding: 20px;
-}
-.add-panel-title { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); margin-bottom: 14px; }
-.add-row { display: flex; gap: 8px; flex-wrap: wrap; }
-.add-input {
-  flex: 1; min-width: 140px; background: var(--bg); border: 1px solid var(--border2);
-  border-radius: 5px; padding: 9px 12px; color: var(--text);
-  font-family: 'Inter', sans-serif; font-size: 12px; outline: none;
-  transition: border-color 0.15s;
-}
-.add-input:focus { border-color: var(--accent); }
-.add-input::placeholder { color: var(--text3); }
-select.add-input { cursor: pointer; }
-
-/* EMPTY STATE */
-.empty-state { padding: 48px 28px; text-align: center; color: var(--text3); }
-.empty-glyph { font-size: 48px; margin-bottom: 12px; }
-.empty-text { font-family: 'JetBrains Mono', monospace; font-size: 13px; }
 
 /* COLOR LEGEND */
 .legend {
@@ -662,6 +634,7 @@ var CAT_TABS = {
   vocab: [
     { key: 'all', label: '[ all ]' },
     { key: 'colours', label: '[ colours ]' },
+    { key: 'adjectives', label: '[ adjectives ]' },
   ]
 };
 
@@ -700,24 +673,14 @@ var data = load();
 var currentCat = 'hangeul';
 
 // ── RENDER ────────────────────────────────────────────────────────────────────
-function renderAll() { updateCounts(); renderTabs(); renderCards(); updateProgress(); }
+function renderAll() { updateCounts(); renderTabs(); renderCards(); }
 
 function updateCounts() {
-  var total = 0;
   ALL_CATS.forEach(function(cat) {
     var n = (data[cat] || []).length;
     var el = document.getElementById('count-' + cat);
-    if (el) el.textContent = n + ' rule' + (n !== 1 ? 's' : '');
-    total += n;
+    if (el) el.textContent = n + ' card' + (n !== 1 ? 's' : '');
   });
-  document.getElementById('totalCards').textContent = total;
-}
-
-function updateProgress() {
-  var total = ALL_CATS.reduce(function(a, cat){ return a + (data[cat] || []).length; }, 0);
-  var pct = Math.min(100, Math.round(total / 80 * 100));
-  document.getElementById('masteryPct').textContent = pct + '%';
-  document.getElementById('progressFill').style.width = pct + '%';
 }
 
 function renderTabs() {
@@ -800,9 +763,45 @@ function renderTableCard(c, hl_term) {
     '</table></div></div></div>';
 }
 
+function renderVocabItem(v, hl_term) {
+  var parts = v.kr.split('\n');
+  var main = parts[0];
+  var sub = parts[1] || '';
+  var hasPrefix = v.prefix;
+  var kcs = v.color ? ' style="color:' + v.color + '"' : '';
+  var krContent = hasPrefix
+    ? '<div class="vocab-kr-row">' +
+      '<span class="vocab-prefix">' + esc(v.prefix).replace(/\n/g, '<br>') + '</span>' +
+      '<span class="vocab-kr"' + kcs + '>' + hl(esc(main), hl_term) + '</span>' +
+      '</div>'
+    : '<div class="vocab-kr"' + kcs + '>' + hl(esc(main), hl_term) +
+      (v.star ? '<span class="vocab-star"> *</span>' : '') + '</div>';
+  var cs = v.color ? ' style="color:' + v.color + '"' : '';
+  return '<div class="vocab-card">' +
+    krContent +
+    (sub ? '<div class="vocab-kr-sub">' + hl(esc(sub), hl_term) + '</div>' : '') +
+    (v.origin ? '<div class="vocab-origin">' + esc(v.origin) + '</div>' : '') +
+    '<div class="vocab-en"' + cs + '>' + hl(esc(v.en), hl_term) + '</div>' +
+    '</div>';
+}
+
+function renderPairedGrid(c, hl_term) {
+  var html = '';
+  for (var i = 0; i < c.vocabData.length; i += 3) {
+    var left = c.vocabData[i];
+    var right = c.vocabData[i + 2];
+    html += '<div class="vocab-pair-row">' +
+      renderVocabItem(left, hl_term) +
+      '<span class="vocab-pair-arrow">&lt;---&gt;</span>' +
+      (right ? renderVocabItem(right, hl_term) : '') +
+      '</div>';
+  }
+  return html;
+}
+
 function renderVocabCard(c, hl_term) {
   if (!c.vocabData) return renderRuleCard(c, hl_term);
-  return '<div class="table-card" style="grid-column:1/-1;">' +
+  var header = '<div class="table-card" style="grid-column:1/-1;">' +
     '<div class="card-header" onclick="toggleTable(this)">' +
     '<div>' +
     '<div class="card-tags-row"><div class="card-tag">VOCAB</div>' +
@@ -810,32 +809,23 @@ function renderVocabCard(c, hl_term) {
     '<div class="card-title-text">' + hl(esc(c.title), hl_term) + '</div>' +
     '</div>' +
     '<span class="table-toggle">[-]</span>' +
-    '</div>' +
-    '<div class="table-body"><div class="vocab-grid">' +
-    c.vocabData.map(function(v) {
-      var parts = v.kr.split('\n');
-      var main = parts[0];
-      var sub = parts[1] || '';
-      var hasPrefix = v.prefix;
-      var kcs = v.color ? ' style="color:' + v.color + '"' : '';
-      var krContent = hasPrefix
-        ? '<div class="vocab-kr-row">' +
-          '<span class="vocab-prefix">' + esc(v.prefix).replace(/\n/g, '<br>') + '</span>' +
-          '<span class="vocab-kr"' + kcs + '>' + hl(esc(main), hl_term) + '</span>' +
-          '</div>'
-        : '<div class="vocab-kr"' + kcs + '>' + hl(esc(main), hl_term) +
-          (v.star ? '<span class="vocab-star"> *</span>' : '') + '</div>';
-      var cs = v.color ? ' style="color:' + v.color + '"' : '';
-      return '<div class="vocab-card">' +
-        krContent +
-        (sub ? '<div class="vocab-kr-sub">' + hl(esc(sub), hl_term) + '</div>' : '') +
-        (v.origin ? '<div class="vocab-origin">' + esc(v.origin) + '</div>' : '') +
-        '<div class="vocab-en"' + cs + '>' + hl(esc(v.en), hl_term) + '</div>' +
-        '</div>';
-    }).join('') +
-    '</div>' +
-    (c.vocabNote ? '<div class="vocab-note">' + esc(c.vocabNote).replace(/\n/g, '<br>') + '</div>' : '') +
+    '</div>';
+
+  var body;
+  if (c.paired) {
+    body = '<div class="table-body"><div class="vocab-grid-paired">' +
+      renderPairedGrid(c, hl_term) +
+      '</div>';
+  } else {
+    body = '<div class="table-body"><div class="vocab-grid">' +
+      c.vocabData.map(function(v) { return renderVocabItem(v, hl_term); }).join('') +
+      '</div>';
+  }
+
+  body += (c.vocabNote ? '<div class="vocab-note">' + esc(c.vocabNote).replace(/\n/g, '<br>') + '</div>' : '') +
     '</div></div>';
+
+  return header + body;
 }
 
 function toggleTable(header) {
@@ -873,6 +863,7 @@ function switchCat(el) {
   renderCards();
   document.getElementById('main').scrollTop = 0;
   if (!sidebarPinned && !sidebarCollapsed) collapseSidebar();
+  if (window.innerWidth <= 768) closeMobileMenu();
 }
 
 // ── SIDEBAR ───────────────────────────────────────────────────────────────────
@@ -983,7 +974,7 @@ searchInput.addEventListener('input', function() {
   searchResults.innerHTML = html;
 });
 
-function goToCard(cat, id) {
+function navigateTo(cat) {
   searchInput.value = '';
   searchDropdown.classList.remove('open');
   var sidebarItem = document.querySelector('[data-cat="' + cat + '"]');
@@ -992,6 +983,10 @@ function goToCard(cat, id) {
     switchCat(sidebarItem);
     sidebarPinned = wasPinned;
   }
+}
+
+function goToCard(cat, id) {
+  navigateTo(cat);
   setTimeout(function() {
     var cards = document.getElementById('cardGrid').querySelectorAll('.rule-card, .table-card');
     var idx = (data[cat] || []).findIndex(function(c){ return c.id === id; });
@@ -1004,14 +999,7 @@ function goToCard(cat, id) {
 }
 
 function goToVocab(cat, id, vocabIdx) {
-  searchInput.value = '';
-  searchDropdown.classList.remove('open');
-  var sidebarItem = document.querySelector('[data-cat="' + cat + '"]');
-  if (sidebarItem) {
-    var wasPinned = sidebarPinned; sidebarPinned = true;
-    switchCat(sidebarItem);
-    sidebarPinned = wasPinned;
-  }
+  navigateTo(cat);
   setTimeout(function() {
     var cards = document.getElementById('cardGrid').querySelectorAll('.rule-card, .table-card');
     var idx = (data[cat] || []).findIndex(function(c){ return c.id === id; });
@@ -1064,12 +1052,6 @@ mobileMenuBtn.addEventListener('click', function() {
 });
 
 sidebarOverlay.addEventListener('click', closeMobileMenu);
-
-var origSwitchCat = switchCat;
-switchCat = function(el) {
-  origSwitchCat(el);
-  if (window.innerWidth <= 768) closeMobileMenu();
-};
 
 renderAll();
 </script>
