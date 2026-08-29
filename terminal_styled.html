@@ -30,6 +30,7 @@
   --source-tag-border: rgba(232, 125, 165, 0.3);
   --vocab-black: #888888;
   --vocab-white: #e8e8e8;
+  --table-divider: #444444;
 }
 .light {
   --bg: #f4f4f4;
@@ -51,6 +52,7 @@
   --source-tag-border: rgba(192, 72, 120, 0.35);
   --vocab-black: #333333;
   --vocab-white: #777777;
+  --table-divider: #aaaaaa;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -451,12 +453,25 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-ser
   color: var(--accent); font-weight: 700; padding: 12px 12px; text-align: left;
   border-bottom: 2px solid var(--accent);
 }
-.kr-table td { padding: 9px 12px; border-bottom: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--text); }
+.kr-table td { padding: 9px 12px; border-bottom: 1px solid var(--border); border-right: 1px solid var(--table-divider); font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--text); }
+.kr-table td:last-child { border-right: none; }
+.kr-table th { border-right: 1px solid var(--table-divider); }
+.kr-table th:last-child { border-right: none; }
 .kr-table tr:last-child td { border-bottom: none; }
 .kr-table tr:hover td { background: var(--bg3); }
 .kr-table .kr-char { font-size: 16px; font-weight: 600; color: var(--accent); }
 .kr-table .kr-rom { color: var(--text2); font-size: 11px; }
 .kr-table .kr-note { color: var(--rule-explain); font-size: 11px; }
+.irr-row { cursor: pointer; }
+.irr-row:hover td { background: var(--bg3); }
+.irr-note-row.collapsed { display: none; }
+.irr-note {
+  font-family: 'JetBrains Mono', monospace; font-size: 11px;
+  color: var(--text); padding: 10px 12px; line-height: 1.8;
+  border-left: 2px solid var(--rule-example);
+}
+.irr-note-blue { color: var(--rule-explain); }
+.irr-note-red { color: var(--rule-change); }
 
 /* COLOR LEGEND */
 .legend {
@@ -741,7 +756,10 @@ function renderRuleCard(c, hl_term) {
 function renderTableCard(c, hl_term) {
   if (!c.tableData) return renderRuleCard(c, hl_term);
   var headers = c.tableData.headers, rows = c.tableData.rows;
-  return '<div class="table-card" style="grid-column:1/-1;">' +
+  var colCount = headers.length;
+  var isExpandable = c.expandableRows;
+
+  var header = '<div class="table-card" style="grid-column:1/-1;">' +
     '<div class="card-header" onclick="toggleTable(this)">' +
     '<div>' +
     '<div class="card-tags-row"><div class="card-tag">TABLE</div>' +
@@ -749,17 +767,40 @@ function renderTableCard(c, hl_term) {
     '<div class="card-title-text">' + hl(esc(c.title), hl_term) + '</div>' +
     '</div>' +
     '<span class="table-toggle">[-]</span>' +
-    '</div>' +
-    '<div class="table-body"><div style="overflow-x:auto;"><table class="kr-table">' +
-    '<thead><tr>' + headers.map(function(h){ return '<th>' + esc(h) + '</th>'; }).join('') + '</tr></thead>' +
-    '<tbody>' + rows.map(function(row){
-      return '<tr>' + row.map(function(cell, i){
+    '</div>';
+
+  var tbody;
+  if (isExpandable) {
+    tbody = rows.map(function(row) {
+      var cells = row.cells || row;
+      var tr = '<tr class="irr-row" onclick="toggleIrrNote(this)">' + cells.map(function(cell) {
+        return '<td>' + hl(esc(cell), hl_term) + '</td>';
+      }).join('') + '</tr>';
+      if (row.note) {
+        var noteHtml = row.note.split('\n').map(function(line) {
+          if (line.indexOf('Pattern:') === 0 || line.indexOf('Exceptions:') === 0 || line.indexOf('No exceptions') === 0 || line.indexOf('Note:') === 0) return '<span class="irr-note-red">' + hl(esc(line), hl_term) + '</span>';
+          return '<span class="irr-note-blue">' + hl(esc(line), hl_term) + '</span>';
+        }).join('<br>');
+        tr += '<tr class="irr-note-row collapsed"><td colspan="' + colCount + '"><div class="irr-note">' +
+          noteHtml + '</div></td></tr>';
+      }
+      return tr;
+    }).join('');
+  } else {
+    tbody = rows.map(function(row) {
+      return '<tr>' + row.map(function(cell, i) {
         var isKrFirst = i === 0 && /[\uAC00-\uD7AF\u3131-\u318E]/.test(cell);
         var isKrSecond = i === 1 && /^[a-zA-Z\s\-\/\(\)]+$/.test(cell.trim());
         var cls = isKrFirst ? 'kr-char' : isKrSecond ? 'kr-rom' : (i === row.length - 1 && headers.length > 3 ? 'kr-note' : '');
         return '<td class="' + cls + '">' + hl(esc(cell), hl_term) + '</td>';
       }).join('') + '</tr>';
-    }).join('') + '</tbody>' +
+    }).join('');
+  }
+
+  return header +
+    '<div class="table-body"><div style="overflow-x:auto;"><table class="kr-table">' +
+    '<thead><tr>' + headers.map(function(h){ return '<th>' + esc(h) + '</th>'; }).join('') + '</tr></thead>' +
+    '<tbody>' + tbody + '</tbody>' +
     '</table></div></div></div>';
 }
 
@@ -833,6 +874,13 @@ function toggleTable(header) {
   var toggle = header.querySelector('.table-toggle');
   card.classList.toggle('collapsed');
   toggle.textContent = card.classList.contains('collapsed') ? '[+]' : '[-]';
+}
+
+function toggleIrrNote(row) {
+  var noteRow = row.nextElementSibling;
+  if (noteRow && noteRow.classList.contains('irr-note-row')) {
+    noteRow.classList.toggle('collapsed');
+  }
 }
 
 function esc(s) {
