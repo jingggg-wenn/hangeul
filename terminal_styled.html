@@ -503,6 +503,7 @@ select.add-input { cursor: pointer; }
 <script src="data/counting.js"></script>
 <script src="data/honorific.js"></script>
 <script src="data/vocab.js"></script>
+<script src="data/irregular.js"></script>
 </head>
 <body>
 
@@ -550,11 +551,11 @@ select.add-input { cursor: pointer; }
           <div class="sidebar-count" id="count-hangeul">0 rules</div>
         </div>
       </div>
-      <div class="sidebar-item" data-cat="pronunciation" onclick="switchCat(this)">
-        <div class="sidebar-glyph">발</div>
+      <div class="sidebar-item" data-cat="counting" onclick="switchCat(this)">
+        <div class="sidebar-glyph">수</div>
         <div class="sidebar-text">
-          <div class="sidebar-name">Pronunciation</div>
-          <div class="sidebar-count" id="count-pronunciation">0 rules</div>
+          <div class="sidebar-name">Counting</div>
+          <div class="sidebar-count" id="count-counting">0 rules</div>
         </div>
       </div>
       <div class="sidebar-item" data-cat="grammar" onclick="switchCat(this)">
@@ -564,11 +565,18 @@ select.add-input { cursor: pointer; }
           <div class="sidebar-count" id="count-grammar">0 rules</div>
         </div>
       </div>
-      <div class="sidebar-item" data-cat="counting" onclick="switchCat(this)">
-        <div class="sidebar-glyph">수</div>
+      <div class="sidebar-item" data-cat="irregular" onclick="switchCat(this)">
+        <div class="sidebar-glyph">불</div>
         <div class="sidebar-text">
-          <div class="sidebar-name">Counting</div>
-          <div class="sidebar-count" id="count-counting">0 rules</div>
+          <div class="sidebar-name">Irregular Verbs</div>
+          <div class="sidebar-count" id="count-irregular">0 cards</div>
+        </div>
+      </div>
+      <div class="sidebar-item" data-cat="pronunciation" onclick="switchCat(this)">
+        <div class="sidebar-glyph">발</div>
+        <div class="sidebar-text">
+          <div class="sidebar-name">Pronunciation</div>
+          <div class="sidebar-count" id="count-pronunciation">0 rules</div>
         </div>
       </div>
       <div class="sidebar-item" data-cat="honorific" onclick="switchCat(this)">
@@ -620,7 +628,7 @@ if (localStorage.getItem('hg-auth') !== 'true') { location.href = 'index.html'; 
 // ── CONFIG ────────────────────────────────────────────────────────────────────
 // To add a new category: add a data file in data/, add an entry here, add a sidebar item in HTML.
 
-var ALL_CATS = ['hangeul', 'pronunciation', 'grammar', 'counting', 'honorific', 'vocab'];
+var ALL_CATS = ['hangeul', 'counting', 'grammar', 'irregular', 'pronunciation', 'honorific', 'vocab'];
 
 var CAT_META = {
   hangeul:       { title: '<span>가나다</span> Hangeul Alphabets',  subtitle: 'consonants · vowels · syllable blocks' },
@@ -629,6 +637,7 @@ var CAT_META = {
   counting:      { title: '<span>수</span> Counting', subtitle: 'native · sino-korean · counters · time · dates · positional words' },
   honorific:     { title: '<span>존댓말</span> Honorific Forms',    subtitle: 'speech levels · (으)시 · humble forms · 합쇼체' },
   vocab:         { title: '<span>어휘</span> Vocabulary',          subtitle: 'colours · food · animals · everyday words' },
+  irregular:     { title: '<span>불규칙</span> Irregular Verbs',   subtitle: 'ㄷ · ㅂ · ㅎ · ㄹ · ㅅ · 르 irregulars' },
 };
 
 var CAT_LABELS = {
@@ -638,6 +647,7 @@ var CAT_LABELS = {
   counting: 'Counting',
   honorific: 'Honorific Forms',
   vocab: 'Vocabulary',
+  irregular: 'Irregular Verbs',
 };
 
 var CAT_TABS = {
@@ -665,6 +675,7 @@ var SEED = {
   counting:      (typeof COUNTING_DATA      !== 'undefined') ? COUNTING_DATA      : [],
   honorific:     (typeof HONORIFIC_DATA     !== 'undefined') ? HONORIFIC_DATA     : [],
   vocab:         (typeof VOCAB_DATA        !== 'undefined') ? VOCAB_DATA        : [],
+  irregular:     (typeof IRREGULAR_DATA   !== 'undefined') ? IRREGULAR_DATA   : [],
 };
 
 // ── DATA / PERSISTENCE ────────────────────────────────────────────────────────
@@ -757,9 +768,9 @@ function renderRuleCard(c, hl_term) {
     (c.formula ? '<div class="formula"><span class="f-base">' + fmtFormula(c.formula, hl_term) + '</span></div>' : '') +
     (c.explain ? '<div class="card-explain">' + hl(esc(c.explain), hl_term) + '</div>' : '') +
     ((c.ex1 || c.ex2) ? '<div class="examples-label">Examples</div>' +
-      (c.ex1 ? '<div class="example-row">' + hl(esc(c.ex1), hl_term) + '</div>' : '') +
-      (c.ex2 ? '<div class="example-row">' + hl(esc(c.ex2), hl_term) + '</div>' : '') +
-      (c.ex3 ? '<div class="example-row">' + hl(esc(c.ex3), hl_term) + '</div>' : '') : '') +
+      (c.ex1 ? '<div class="example-row">' + hl(esc(c.ex1), hl_term).replace(/\n/g, '<br>') + '</div>' : '') +
+      (c.ex2 ? '<div class="example-row">' + hl(esc(c.ex2), hl_term).replace(/\n/g, '<br>') + '</div>' : '') +
+      (c.ex3 ? '<div class="example-row">' + hl(esc(c.ex3), hl_term).replace(/\n/g, '<br>') + '</div>' : '') : '') +
     (c.exception ? '<div class="exception-block"><div class="exception-label">Exception / Note</div><div class="exception-text">' + hl(esc(c.exception), hl_term) + '</div></div>' : '') +
     '</div></div>';
 }
@@ -918,10 +929,18 @@ searchInput.addEventListener('input', function() {
   var found = [];
   ALL_CATS.forEach(function(cat) {
     (data[cat] || []).forEach(function(c) {
-      var haystack = [c.title, c.formula, c.explain, c.ex1, c.ex2, c.ex3, c.exception, c.vocabNote].filter(Boolean).join(' ').toLowerCase();
-      if (c.tableData) c.tableData.rows.forEach(function(r){ haystack += ' ' + r.join(' ').toLowerCase(); });
-      if (c.vocabData) c.vocabData.forEach(function(v){ haystack += ' ' + [v.kr, v.en, v.origin, v.prefix].filter(Boolean).join(' ').toLowerCase(); });
-      if (haystack.includes(q)) found.push({ cat: cat, card: c });
+      if (c.vocabData) {
+        c.vocabData.forEach(function(v, vi) {
+          var vh = [v.kr, v.en, v.origin, v.prefix].filter(Boolean).join(' ').toLowerCase();
+          if (vh.includes(q)) found.push({ cat: cat, card: c, vocabIdx: vi, vocabItem: v });
+        });
+        var noteHay = (c.vocabNote || '').toLowerCase();
+        if (noteHay.includes(q)) found.push({ cat: cat, card: c, vocabIdx: -1 });
+      } else {
+        var haystack = [c.title, c.formula, c.explain, c.ex1, c.ex2, c.ex3, c.exception].filter(Boolean).join(' ').toLowerCase();
+        if (c.tableData) c.tableData.rows.forEach(function(r){ haystack += ' ' + r.join(' ').toLowerCase(); });
+        if (haystack.includes(q)) found.push({ cat: cat, card: c });
+      }
     });
   });
 
@@ -937,12 +956,29 @@ searchInput.addEventListener('input', function() {
       lastCat = item.cat;
     }
     var c = item.card;
-    var snippet = (c.explain || c.formula || c.ex1 || '').substring(0, 80);
-    html += '<div class="search-result-row" onclick="goToCard(\'' + item.cat + '\',\'' + c.id + '\')">' +
-      '<div class="srr-tag">' + c.type.toUpperCase() + '</div>' +
-      '<div><div class="srr-title">' + hl(esc(c.title), esc(q)) + '</div>' +
-      (snippet ? '<div class="srr-snippet">' + hl(esc(snippet), esc(q)) + '</div>' : '') +
-      '</div></div>';
+    var vi = item.vocabIdx;
+    if (vi !== undefined && vi >= 0) {
+      var v = item.vocabItem;
+      var krClean = v.kr.replace(/\n/g, ' ');
+      html += '<div class="search-result-row" onclick="goToVocab(\'' + item.cat + '\',\'' + c.id + '\',' + vi + ')">' +
+        '<div class="srr-tag">VOCAB</div>' +
+        '<div><div class="srr-title">' + hl(esc(krClean), esc(q)) + ' — ' + hl(esc(v.en), esc(q)) + '</div>' +
+        '<div class="srr-snippet">' + hl(esc(c.title), esc(q)) + '</div>' +
+        '</div></div>';
+    } else if (vi === -1) {
+      html += '<div class="search-result-row" onclick="goToCard(\'' + item.cat + '\',\'' + c.id + '\')">' +
+        '<div class="srr-tag">VOCAB</div>' +
+        '<div><div class="srr-title">' + hl(esc(c.title), esc(q)) + '</div>' +
+        '<div class="srr-snippet">' + hl(esc((c.vocabNote || '').substring(0, 80)), esc(q)) + '</div>' +
+        '</div></div>';
+    } else {
+      var snippet = (c.explain || c.formula || c.ex1 || '').substring(0, 80);
+      html += '<div class="search-result-row" onclick="goToCard(\'' + item.cat + '\',\'' + c.id + '\')">' +
+        '<div class="srr-tag">' + c.type.toUpperCase() + '</div>' +
+        '<div><div class="srr-title">' + hl(esc(c.title), esc(q)) + '</div>' +
+        (snippet ? '<div class="srr-snippet">' + hl(esc(snippet), esc(q)) + '</div>' : '') +
+        '</div></div>';
+    }
   });
   searchResults.innerHTML = html;
 });
@@ -963,6 +999,35 @@ function goToCard(cat, id) {
       cards[idx].scrollIntoView({ behavior: 'smooth', block: 'center' });
       cards[idx].style.borderColor = 'var(--accent)';
       setTimeout(function(){ cards[idx].style.borderColor = ''; }, 1800);
+    }
+  }, 80);
+}
+
+function goToVocab(cat, id, vocabIdx) {
+  searchInput.value = '';
+  searchDropdown.classList.remove('open');
+  var sidebarItem = document.querySelector('[data-cat="' + cat + '"]');
+  if (sidebarItem) {
+    var wasPinned = sidebarPinned; sidebarPinned = true;
+    switchCat(sidebarItem);
+    sidebarPinned = wasPinned;
+  }
+  setTimeout(function() {
+    var cards = document.getElementById('cardGrid').querySelectorAll('.rule-card, .table-card');
+    var idx = (data[cat] || []).findIndex(function(c){ return c.id === id; });
+    if (cards[idx]) {
+      var vocabCards = cards[idx].querySelectorAll('.vocab-card');
+      if (vocabCards[vocabIdx]) {
+        vocabCards[vocabIdx].scrollIntoView({ behavior: 'smooth', block: 'center' });
+        vocabCards[vocabIdx].style.borderColor = 'var(--accent)';
+        vocabCards[vocabIdx].style.background = 'var(--bg3)';
+        setTimeout(function(){
+          vocabCards[vocabIdx].style.borderColor = '';
+          vocabCards[vocabIdx].style.background = '';
+        }, 2000);
+      } else {
+        cards[idx].scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
     }
   }, 80);
 }
