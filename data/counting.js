@@ -219,6 +219,7 @@ var COUNTING_DATA = [
       { kr: '십일', en: '10th' },
       { kr: '이십일', en: '20th' },
       { kr: '삼십일', en: '30th' },
+      { kr: '삼십일일', en: '31st' },
     ],
     vocabNote: 'Days use Sino-Korean numbers + 일. Pattern: number + 일. e.g. 십오일 = 15th, 이십삼일 = 23rd.'
   },

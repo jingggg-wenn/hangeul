@@ -28,6 +28,8 @@
   --source-tag-color: #e87da5;
   --source-tag-bg: rgba(232, 125, 165, 0.1);
   --source-tag-border: rgba(232, 125, 165, 0.3);
+  --vocab-black: #888888;
+  --vocab-white: #e8e8e8;
 }
 .light {
   --bg: #f4f4f4;
@@ -47,6 +49,8 @@
   --source-tag-color: #c04878;
   --source-tag-bg: rgba(192, 72, 120, 0.1);
   --source-tag-border: rgba(192, 72, 120, 0.35);
+  --vocab-black: #333333;
+  --vocab-white: #777777;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -498,6 +502,7 @@ select.add-input { cursor: pointer; }
 <script src="data/grammar.js"></script>
 <script src="data/counting.js"></script>
 <script src="data/honorific.js"></script>
+<script src="data/vocab.js"></script>
 </head>
 <body>
 
@@ -573,6 +578,13 @@ select.add-input { cursor: pointer; }
           <div class="sidebar-count" id="count-honorific">0 rules</div>
         </div>
       </div>
+      <div class="sidebar-item" data-cat="vocab" onclick="switchCat(this)">
+        <div class="sidebar-glyph">어</div>
+        <div class="sidebar-text">
+          <div class="sidebar-name">Vocabulary</div>
+          <div class="sidebar-count" id="count-vocab">0 cards</div>
+        </div>
+      </div>
 
     </div>
   </div>
@@ -608,7 +620,7 @@ if (localStorage.getItem('hg-auth') !== 'true') { location.href = 'index.html'; 
 // ── CONFIG ────────────────────────────────────────────────────────────────────
 // To add a new category: add a data file in data/, add an entry here, add a sidebar item in HTML.
 
-var ALL_CATS = ['hangeul', 'pronunciation', 'grammar', 'counting', 'honorific'];
+var ALL_CATS = ['hangeul', 'pronunciation', 'grammar', 'counting', 'honorific', 'vocab'];
 
 var CAT_META = {
   hangeul:       { title: '<span>가나다</span> Hangeul Alphabets',  subtitle: 'consonants · vowels · syllable blocks' },
@@ -616,6 +628,7 @@ var CAT_META = {
   grammar:       { title: '<span>문법</span> Grammar Rules',        subtitle: 'particles · tense · connectors · negation' },
   counting:      { title: '<span>수</span> Counting', subtitle: 'native · sino-korean · counters · time · dates · positional words' },
   honorific:     { title: '<span>존댓말</span> Honorific Forms',    subtitle: 'speech levels · (으)시 · humble forms · 합쇼체' },
+  vocab:         { title: '<span>어휘</span> Vocabulary',          subtitle: 'colours · food · animals · everyday words' },
 };
 
 var CAT_LABELS = {
@@ -624,6 +637,7 @@ var CAT_LABELS = {
   grammar: 'Grammar',
   counting: 'Counting',
   honorific: 'Honorific Forms',
+  vocab: 'Vocabulary',
 };
 
 var CAT_TABS = {
@@ -634,6 +648,10 @@ var CAT_TABS = {
     { key: 'time-grammar', label: '[ time grammar ]' },
     { key: 'months-seasons', label: '[ seasons, months, days & dates ]' },
     { key: 'money', label: '[ money ]' },
+  ],
+  vocab: [
+    { key: 'all', label: '[ all ]' },
+    { key: 'colours', label: '[ colours ]' },
   ]
 };
 
@@ -646,6 +664,7 @@ var SEED = {
   grammar:       (typeof GRAMMAR_DATA       !== 'undefined') ? GRAMMAR_DATA       : [],
   counting:      (typeof COUNTING_DATA      !== 'undefined') ? COUNTING_DATA      : [],
   honorific:     (typeof HONORIFIC_DATA     !== 'undefined') ? HONORIFIC_DATA     : [],
+  vocab:         (typeof VOCAB_DATA        !== 'undefined') ? VOCAB_DATA        : [],
 };
 
 // ── DATA / PERSISTENCE ────────────────────────────────────────────────────────
@@ -787,18 +806,20 @@ function renderVocabCard(c, hl_term) {
       var main = parts[0];
       var sub = parts[1] || '';
       var hasPrefix = v.prefix;
+      var kcs = v.color ? ' style="color:' + v.color + '"' : '';
       var krContent = hasPrefix
         ? '<div class="vocab-kr-row">' +
           '<span class="vocab-prefix">' + esc(v.prefix).replace(/\n/g, '<br>') + '</span>' +
-          '<span class="vocab-kr">' + hl(esc(main), hl_term) + '</span>' +
+          '<span class="vocab-kr"' + kcs + '>' + hl(esc(main), hl_term) + '</span>' +
           '</div>'
-        : '<div class="vocab-kr">' + hl(esc(main), hl_term) +
+        : '<div class="vocab-kr"' + kcs + '>' + hl(esc(main), hl_term) +
           (v.star ? '<span class="vocab-star"> *</span>' : '') + '</div>';
+      var cs = v.color ? ' style="color:' + v.color + '"' : '';
       return '<div class="vocab-card">' +
         krContent +
         (sub ? '<div class="vocab-kr-sub">' + hl(esc(sub), hl_term) + '</div>' : '') +
         (v.origin ? '<div class="vocab-origin">' + esc(v.origin) + '</div>' : '') +
-        '<div class="vocab-en">' + hl(esc(v.en), hl_term) + '</div>' +
+        '<div class="vocab-en"' + cs + '>' + hl(esc(v.en), hl_term) + '</div>' +
         '</div>';
     }).join('') +
     '</div>' +
