@@ -52,6 +52,12 @@ var VOCAB_DATA = [
       { kr: '무섭다', en: 'To be scary' },
       { arrow: true },
       { kr: '편하다', en: 'To be comfortable' },
+      { kr: '어렵다', en: 'To be difficult' },
+      { arrow: true },
+      { kr: '쉽다', en: 'To be easy' },
+      { kr: '가깝다', en: 'To be near/close' },
+      { arrow: true },
+      { kr: '멀다', en: 'To be far' },
     ],
     vocabNote: 'Korean adjectives function like verbs (they conjugate). The dictionary form ends in 다. To use before a noun, drop 다 and add the appropriate ending.\nTo say someone is tall: 키가 크다 (키가 커요). To say someone is short: 키가 작다 (키가 작아요).'
   },
