@@ -21,7 +21,7 @@ var IRREGULAR_DATA = [
         },
         {
           cells: ['ㄹ (rieul)', 'Verbs & Adj', 'ㅂ, ㄴ, ㅅ (바네사 씨 있어요?)', 'Omit ㄹ'],
-          note: '알다 → 아는데요 (to know)\n만들다 → 만드는 게 어때요? (to make)\n열다 → 여니까 (to open)\n알다 → 아세요 (honorific, ㄹ drops before ㅅ)\n살다 → 사세요 (honorific, ㄹ drops before ㅅ)\n살다 → 삽니다 (formal, ㄹ drops before ㅂ)\nMore: 살다 (to live), 팔다 (to sell), 놀다 (to play), 길다 (to be long), 멀다 (to be far)\nPattern: when ㄹ meets ㅂ, ㄴ, or ㅅ, the ㄹ is dropped. Mnemonic: 바네사 씨 있어요? (Is Vanessa here?)\nNote: irregular ㄹ takes precedence over the special ㄹ rule.\nNote: -(으)면, special ㄹ rule takes effect —> ㄹ stays, 으 option not taken: 살면 (not 살으면).\nNote: when special ㄹ rule applies, vowel option is used (no 으 buffer)\nNo exceptions — this rule applies to all ㄹ-ending stems.'
+          note: '알다 → 아는데요 (to know)\n만들다 → 만드는 게 어때요? (to make)\n열다 → 여니까 (to open)\n알다 → 아세요 (honorific, ㄹ drops before ㅅ)\n살다 → 사세요 (honorific, ㄹ drops before ㅅ)\n살다 → 삽니다 (formal, ㄹ drops before ㅂ)\nMore: 살다 (to live), 팔다 (to sell), 놀다 (to play), 길다 (to be long), 멀다 (to be far)\nPattern: when ㄹ meets ㅂ, ㄴ, or ㅅ, the ㄹ is dropped. Mnemonic: 바네사 씨 있어요? (Is Vanessa here?)\nNote: irregular ㄹ takes precedence over the special ㄹ rule.\nNote: special ㄹ rule takes effect likely when there is a presence of 으 (e.g. 을/ㄹ 때 OR 으면)\nNote: when special ㄹ rule applies, vowel option is used (no 으 buffer) (e.g. 살면, not 살으면) \nNo exceptions — this rule applies to all ㄹ-ending stems.'
         },
       ]
     }
