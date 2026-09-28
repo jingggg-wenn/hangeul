@@ -259,4 +259,18 @@ var COUNTING_DATA = [
     ],
     vocabNote: 'These words do not need the time marker 에. They function as time adverbs on their own.\ne.g. 오늘 학교에 가요. (I go to school today.) 매일 운동해요. (I exercise every day.)'
   },
+
+  // ── MONEY ───────────────────────────────────────────────────────────────────
+  {
+    id: 'c_m_v1', tag: 'B1T1', type: 'vocab', group: 'money',
+    title: 'Korean Money - Price Building Blocks (가격 읽기)',
+    vocabData: [
+      { kr: '십 원', en: '10 won' },
+      { kr: '백 원', en: '100 won' },
+      { kr: '천 원', en: '1,000 won' },
+      { kr: '만 원', en: '10,000 won' },
+      { kr: '십만 원', en: '100,000 won' },
+    ],
+    vocabNote: 'Korean money uses Chinese numerals + 원.\nOmit 일 for the first unit: 천 (not 일천), 만 (not 일만), 백 (not 일백).\nNumbers are grouped by: 만(10,000) → 천(1,000) → 백(100) → 십(10).\n얼마예요? = How much is it?'
+  },
 ];
