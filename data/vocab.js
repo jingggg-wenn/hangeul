@@ -74,4 +74,17 @@ var VOCAB_DATA = [
     ],
     vocabNote: ''
   },
+  {
+    id: 'v_v4', tag: 'B2T2', type: 'vocab', group: 'daily-nouns',
+    title: 'Daily Nouns (일상 명사)',
+    vocabData: [
+      { kr: '영수증', en: 'Receipt' },
+      { kr: '', en: '' },
+      { kr: '', en: '' },
+      { kr: '', en: '' },
+      { kr: '', en: '' },
+      { kr: '', en: '' },
+    ],
+    vocabNote: ''
+  },
 ];
