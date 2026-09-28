@@ -38,35 +38,30 @@ var COUNTING_DATA = [
     vocabNote: 'Chinese numerals are based on Chinese characters. Used for: dates (년/월/일), money (원), phone numbers, minutes (분), seconds (초), floors, addresses.'
   },
   {
-    id: 'c_t2', tag: 'pre-populated', type: 'table', group: 'counting',
-    title: 'Common Counters (단위명사)',
-    tableData: {
-      headers: ['Counter', 'Used for', 'Example'],
-      rows: [
-        ['개 (個)', 'generic objects', '사과 세 개 (3 apples)'],
-        ['명 (名)', 'people (neutral)', '학생 두 명 (2 students)'],
-        ['분 (分)', 'people (polite)', '세 분 (3 people — formal)'],
-        ['마리', 'animals', '고양이 한 마리 (1 cat)'],
-        ['권 (卷)', 'books / volumes', '책 다섯 권 (5 books)'],
-        ['장 (張)', 'flat sheets', '종이 한 장 (1 sheet of paper)'],
-        ['병 (病)', 'bottles', '물 두 병 (2 bottles of water)'],
-        ['잔 (盞)', 'cups / glasses', '커피 한 잔 (1 cup of coffee)'],
-        ['번 (番)', 'times / occurrences', '세 번 (3 times)'],
-        ['시 (時)', 'o\'clock (Native num)', '두 시 (2 o\'clock)'],
-        ['분 (分)', 'minutes (Sino num)', '삼십 분 (30 minutes)'],
-        ['살', 'age (Native num)', '스물다섯 살 (25 years old)'],
-        ['세 (歲)', 'age (formal, Sino)', '이십오 세 (25 years old)'],
-      ]
-    }
+    id: 'c_v9', tag: 'B1T1', type: 'vocab', group: 'counting',
+    title: 'Counting Units (단위명사)',
+    vocabData: [
+      { kr: '병', en: 'Bottles' },
+      { kr: '잔', en: 'Glasses / Cups' },
+      { kr: '개', en: 'General Items' },
+      { kr: '명', en: 'Person' },
+      { kr: '권', en: 'Books' },
+      { kr: '마리', en: 'Animals' },
+      { kr: '송이 (꽃)', en: 'Stalks (of flower)' },
+      { kr: '벌', en: 'Clothes (Top & Bottom)' },
+      { kr: '켤레', en: 'Pairs (of footwear)' },
+      { kr: '대', en: 'Electronic Items / Vehicles' },
+    ],
+    vocabNote: 'All counting units use Korean numerals (순우리말 수).'
   },
   {
-    id: 'c_r1', tag: 'pre-populated', type: 'rule', group: 'counting',
-    title: 'Counter Word Order',
-    formula: 'Noun + number + counter',
-    explain: 'In Korean, the counter comes after the number, and the whole [number + counter] chunk follows the noun. The native number may contract when directly before a counter: 하나 → 한, 둘 → 두, 셋 → 세, 넷 → 네, 스물 → 스무.',
+    id: 'c_r1', tag: 'B1T1', type: 'rule', group: 'counting',
+    title: 'Count Specific Quantities (수량 세기)',
+    formula: '<noun> + <kor num> + <counter>',
+    explain: 'The native number may contract when directly before a counter: 하나 → 한, 둘 → 두, 셋 → 세, 넷 → 네, 스물 → 스무.',
     ex1: '책 세 권 주세요. (Please give me 3 books.)',
     ex2: '학생이 열두 명 있어요. (There are 12 students.)',
-    exception: 'Some counters always use Sino numbers (분 for minutes, 월 for months, 년 for years). Some always use Native (시 for hours, 살 for age).'
+    exception: 'No object marker (을/를) is needed between the noun and the number+counter.',
   },
   {
     id: 'c_t5', tag: 'B1T2', type: 'vocab', group: 'positional',
@@ -108,7 +103,7 @@ var COUNTING_DATA = [
   {
     id: 'c_r4', tag: 'B1T2', type: 'rule', group: 'time-grammar',
     title: 'Time (시간 말하기)',
-    formula: '<Kor Num> 시 + <Chi Num> 분 + 이에요',
+    formula: '<kor num> 시 + <chi num> 분 + 이에요',
     explain: 'Hours use Korean numerals with 시, minutes use Sino-Korean numerals with 분. Combine both to tell the full time. 30 minutes can be replaced with 반 (half).',
     ex1: '두 시 반이에요. (It is 2:30.)',
     ex2: '오전 아홉 시. (9 AM) / 오후 세 시. (3 PM)',
@@ -259,7 +254,6 @@ var COUNTING_DATA = [
     ],
     vocabNote: 'These words do not need the time marker 에. They function as time adverbs on their own.\ne.g. 오늘 학교에 가요. (I go to school today.) 매일 운동해요. (I exercise every day.)'
   },
-
   // ── MONEY ───────────────────────────────────────────────────────────────────
   {
     id: 'c_m_v1', tag: 'B1T1', type: 'vocab', group: 'money',
@@ -273,4 +267,16 @@ var COUNTING_DATA = [
     ],
     vocabNote: 'Korean money uses Chinese numerals + 원.\nOmit 일 for the first unit: 천 (not 일천), 만 (not 일만), 백 (not 일백).\nNumbers are grouped by: 만(10,000) → 천(1,000) → 백(100) → 십(10).\n얼마예요? = How much is it?\ne.g. 482,130원 → 48만 / 2천 / 1백 / 3십 → 사십팔만 이천백삼십 원'
   },
+
+  // ── AGE ─────────────────────────────────────────────────────────────────────
+  {
+    id: 'c_a_v1', tag: 'pre-populated', type: 'vocab', group: 'age',
+    title: 'Age Counters (나이)',
+    vocabData: [
+      { kr: '살', en: 'Age (Native numerals)' },
+      { kr: '세 (歲)', en: 'Age (formal, Sino numerals)' },
+    ],
+    vocabNote: 'Casual: 스물다섯 살 (25 years old, Native numerals).\nFormal: 이십오 세 (25 years old, Sino numerals).\n몇 살이에요? = How old are you?'
+  },
+
 ];
