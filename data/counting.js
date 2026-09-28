@@ -271,6 +271,6 @@ var COUNTING_DATA = [
       { kr: '만 원', en: '10,000 won' },
       { kr: '십만 원', en: '100,000 won' },
     ],
-    vocabNote: 'Korean money uses Chinese numerals + 원.\nOmit 일 for the first unit: 천 (not 일천), 만 (not 일만), 백 (not 일백).\nNumbers are grouped by: 만(10,000) → 천(1,000) → 백(100) → 십(10).\n얼마예요? = How much is it?'
+    vocabNote: 'Korean money uses Chinese numerals + 원.\nOmit 일 for the first unit: 천 (not 일천), 만 (not 일만), 백 (not 일백).\nNumbers are grouped by: 만(10,000) → 천(1,000) → 백(100) → 십(10).\n얼마예요? = How much is it?\ne.g. 482,130원 → 48만 / 2천 / 1백 / 3십 → 사십팔만 이천백삼십 원'
   },
 ];
