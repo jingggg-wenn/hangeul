@@ -1,13 +1,29 @@
 // data/grammar.js — Grammar Rules seed cards
 var GRAMMAR_DATA = [
   {
+    id: 'g_r0', tag: 'B1T1', type: 'rule',
+    title: 'Greetings (인사)',
+    formula: '안녕하세요 (Hello)\n안녕히 가세요 (Goodbye — to person leaving)\n안녕히 계세요 (Goodbye — to person staying)',
+    explain: '가세요 = "go" (the other person is leaving). 계세요 = "stay" (the other person is staying). If both are leaving, use 안녕히 가세요 to each other.',
+    ex1: '처음 뵙겠습니다. (Nice to meet you. — formal)',
+    ex2: '만나서 반갑습니다. (Pleased to meet you.)',
+  },
+  {
     id: 'g_r1', tag: 'B1T1', type: 'rule',
     title: 'Topic Marker (은/는)',
-    formula: '<noun> 은 (FC) + 이에요/예요\n<noun> 는 (V) + 이에요/예요',
+    formula: '<noun> 은 (FC)\n<noun> 는 (V)',
     explain: 'Added to nouns (things/places/people) to indicate the topic in the sentence.',
     ex1: '저는 학생이에요. (As for me, I am a student.)',
     ex2: '밥은 먹었어요. (As for the rice, I ate it.)',
     exception: 'Topic ≠ subject. 저는 marks topic/contrast; 제가 marks grammatical subject (who did it).'
+  },
+  {
+    id: 'g_r0b', tag: 'B1T1', type: 'rule',
+    title: 'Noun Present Tense (이에요/예요)',
+    formula: '<noun> 이에요 (FC)\n<noun> 예요 (V)',
+    explain: 'Used to say "It is <noun>". Choose 이에요 when the noun ends with a final consonant (FC), 예요 when it ends with a vowel (V).',
+    ex1: '학생이에요. (It is a student.) — FC: ㅇ',
+    ex2: '의사예요. (It is a doctor.) — V: 사',
   },
   {
     id: 'g_r2', tag: 'pre-populated', type: 'rule',
