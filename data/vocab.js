@@ -79,6 +79,7 @@ var VOCAB_DATA = [
     title: 'Daily Nouns (일상 명사)',
     vocabData: [
       { kr: '영수증', en: 'Receipt' },
+      { kr: '줄', en: 'Line / Queue' },
       { kr: '', en: '' },
       { kr: '', en: '' },
       { kr: '', en: '' },
@@ -86,5 +87,24 @@ var VOCAB_DATA = [
       { kr: '', en: '' },
     ],
     vocabNote: ''
+  },
+  {
+    id: 'v_v5', tag: 'B1T1', type: 'vocab', group: 'countries',
+    title: 'Countries (나라)',
+    vocabData: [
+      { kr: '한국', en: 'South Korea' },
+      { kr: '미국', en: 'USA' },
+      { kr: '일본', en: 'Japan' },
+      { kr: '중국', en: 'China' },
+      { kr: '영국', en: 'UK' },
+      { kr: '호주', en: 'Australia' },
+      { kr: '싱가포르', en: 'Singapore' },
+      { kr: '말레이시아', en: 'Malaysia' },
+      { kr: '대만', en: 'Taiwan' },
+      { kr: '태국', en: 'Thailand' },
+      { kr: '', en: '' },
+      { kr: '', en: '' },
+    ],
+    vocabNote: '<noun> + 은/는 + <country>사람이에요.\ne.g. 저는 싱가포르사람이에요. (I am Singaporean.)\nAsking (polite): 혹시 한국분이세요? (Are you perhaps Korean?) — 분 is the elevated form of 사람.'
   },
 ];

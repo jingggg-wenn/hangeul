@@ -1,10 +1,10 @@
 // data/grammar.js — Grammar Rules seed cards
 var GRAMMAR_DATA = [
   {
-    id: 'g_r1', tag: 'pre-populated', type: 'rule',
-    title: 'Topic Particle (은/는)',
-    formula: 'Noun + 은 (after FC) / 는 (after V)',
-    explain: '은/는 marks the topic of a sentence — what the sentence is "about". It can contrast, emphasise, or set context. It does NOT always mean the subject did the action.',
+    id: 'g_r1', tag: 'B1T1', type: 'rule',
+    title: 'Topic Marker (은/는)',
+    formula: '<noun> 은 (FC) + 이에요/예요\n<noun> 는 (V) + 이에요/예요',
+    explain: 'Added to nouns (things/places/people) to indicate the topic in the sentence.',
     ex1: '저는 학생이에요. (As for me, I am a student.)',
     ex2: '밥은 먹었어요. (As for the rice, I ate it.)',
     exception: 'Topic ≠ subject. 저는 marks topic/contrast; 제가 marks grammatical subject (who did it).'
