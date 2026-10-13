@@ -270,15 +270,15 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-ser
 }
 .f-base { color: var(--rule-explain); font-weight: 600; }
 .f-strike {
-  position: relative; display: inline-block; color: var(--rule-base);
+  position: relative; display: inline-block; color: var(--rule-explain);
 }
 .f-strike::after {
   content: ''; position: absolute;
   left: -1px; right: -1px; top: 0; bottom: 0;
   background: linear-gradient(
     to bottom right,
-    transparent 47%, var(--rule-base) 47%,
-    var(--rule-base) 53%, transparent 53%
+    transparent 47%, var(--rule-explain) 47%,
+    var(--rule-explain) 53%, transparent 53%
   );
   pointer-events: none;
 }

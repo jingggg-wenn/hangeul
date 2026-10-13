@@ -61,7 +61,7 @@ var COUNTING_DATA = [
     explain: 'The native number may contract when directly before a counter: 하나 → 한, 둘 → 두, 셋 → 세, 넷 → 네, 스물 → 스무.',
     ex1: '책 세 권 주세요. (Please give me 3 books.)',
     ex2: '학생이 열두 명 있어요. (There are 12 students.)',
-    exception: 'No object marker (을/를) is needed between the noun and the number+counter.',
+    exception: 'No object marker (을/를) is needed between the noun and the number+counter.\nOrdering food: <noun> + <number> + 주세요 — counter can be dropped.\ne.g. 물 두 주세요. (Two waters please.)',
   },
   {
     id: 'c_t5', tag: 'B1T2', type: 'vocab', group: 'positional',

@@ -69,7 +69,7 @@ var VOCAB_DATA = [
       { kr: '똑똑하다', en: 'To be smart' },
       { kr: '', en: '' },
       { kr: '', en: '' },
-      { kr: '', en: '' },
+      { kr: '음료수', en: 'Drinks' },
       { kr: '', en: '' },
     ],
     vocabNote: ''

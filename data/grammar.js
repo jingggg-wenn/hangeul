@@ -11,7 +11,7 @@ var GRAMMAR_DATA = [
   {
     id: 'g_r1', tag: 'B1T1', type: 'rule',
     title: 'Topic Marker (은/는)',
-    formula: '<noun> 은 (FC)\n<noun> 는 (V)',
+    formula: '<noun> + 은 (FC)\n<noun> + 는 (V)',
     explain: 'Added to nouns (things/places/people) to indicate the topic in the sentence.',
     ex1: '저는 학생이에요. (As for me, I am a student.)',
     ex2: '밥은 먹었어요. (As for the rice, I ate it.)',
@@ -20,10 +20,26 @@ var GRAMMAR_DATA = [
   {
     id: 'g_r0b', tag: 'B1T1', type: 'rule',
     title: 'Noun Present Tense (이에요/예요)',
-    formula: '<noun> 이에요 (FC)\n<noun> 예요 (V)',
+    formula: '<noun> + 이에요 (FC)\n<noun> + 예요 (V)',
     explain: 'Used to say "It is <noun>". Choose 이에요 when the noun ends with a final consonant (FC), 예요 when it ends with a vowel (V).',
     ex1: '학생이에요. (It is a student.) — FC: ㅇ',
     ex2: '의사예요. (It is a doctor.) — V: 사',
+  },
+  {
+    id: 'g_r0c', tag: 'B1T1', type: 'rule',
+    title: 'Please (do something) (세요/으세요)',
+    formula: '<verb>~다~ + 으세요 (FC)\n<verb>~다~ + 세요 (V)',
+    explain: 'Drop 다 from the dictionary form to get the verb stem. Add 으세요 if stem ends in a final consonant, 세요 if it ends in a vowel.',
+    ex1: '앉으세요. (Please sit down.) — 앉다 → 앉 (FC)',
+    ex2: '오세요. (Please come.) — 오다 → 오 (V)',
+  },
+  {
+    id: 'g_r0d', tag: 'B1T1', type: 'rule',
+    title: 'And — Connect 2 Nouns (하고)',
+    formula: '<noun1> + 하고 + <noun2>',
+    explain: '하고 connects two nouns, meaning "and" or "with". Used in casual/spoken Korean.\nFormal: 와 (V) / 과 (FC). e.g. 커피와 빵 (coffee and bread).',
+    ex1: '커피하고 빵 주세요. (Coffee and bread please.)',
+    ex2: '빵 다섯 개하고 우유 네 잔 주세요. (Please give me 5 bread and 4 glasses of milk.)',
   },
   {
     id: 'g_r2', tag: 'pre-populated', type: 'rule',
