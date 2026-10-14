@@ -42,13 +42,22 @@ var GRAMMAR_DATA = [
     ex2: '빵 다섯 개하고 우유 네 잔 주세요. (Please give me 5 bread and 4 glasses of milk.)',
   },
   {
-    id: 'g_r2', tag: 'pre-populated', type: 'rule',
-    title: 'Subject Particle (이/가)',
-    formula: 'Noun + 이 (after FC) / 가 (after V)',
-    explain: '이/가 marks the grammatical subject — the doer of the action, or what a descriptive verb describes. Used when introducing new information or when the subject is the focus.',
+    id: 'g_r2', tag: 'B1T1', type: 'rule',
+    title: 'Subject Marker (이/가)',
+    formula: '<noun> + 이 (FC) + <adjective>\n<noun> + 가 (V) + <adjective>',
+    explain: '이/가 marks the noun that is being described in the sentence.',
     ex1: '고양이가 잔다. (The cat is sleeping.)',
     ex2: '누가 왔어요? (Who came?)',
-    exception: '저 → 제가, 나 → 내가 (special contraction with 가). 이/가 is often dropped in casual speech.'
+    exception: '저 → 제가, 나 → 내가 (special contraction with 가). 이/가 is often dropped in casual speech.\n있다 (there is) / 없다 (there isn\'t) are adjectives: <noun> + 이/가 + 있어요/없어요.'
+  },
+  {
+    id: 'g_r2b', tag: 'B1T1', type: 'rule',
+    title: 'This/That (이거/그거/저거)',
+    formula: '이/그/저 + <noun> + 는/은 + <noun>이에요/예요',
+    explain: '이거 — close to speaker.\n그거 — far from speaker, close to listener.\n저거 — far from both speaker and listener.',
+    ex1: '이거는 책이에요. (This is a book.)',
+    ex2: '저거는 뭐예요? (What is that over there?)',
+    exception: 'Question: 이거/그거/저거는 뭐예요? (What is this/that?)',
   },
   {
     id: 'g_r3', tag: 'pre-populated', type: 'rule',

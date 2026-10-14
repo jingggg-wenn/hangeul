@@ -111,6 +111,6 @@ var VOCAB_DATA = [
       { kr: '', en: '' },
       { kr: '', en: '' },
     ],
-    vocabNote: '<noun> + 은/는 + <country>사람이에요.\ne.g. 저는 싱가포르사람이에요. (I am Singaporean.)\nAsking (polite): 혹시 한국분이세요? (Are you perhaps Korean?) — 분 is the elevated form of 사람.'
+    vocabNote: '<noun> + 은/는 + <country>사람이에요.\ne.g. 저는 싱가포르사람이에요. (I am Singaporean.)\nAsking (polite): 혹시 한국분이세요? (Are you perhaps Korean?) — 분 is the elevated form of 사람.\nLanguages: <country> + 어 → 한국어, 일본어, 중국어, 프랑스어, 독일어, 태국어, 베트남어.\nException: 영어 (English) — drops 국.'
   },
 ];

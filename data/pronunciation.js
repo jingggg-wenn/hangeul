@@ -7,7 +7,7 @@ var PRONUNCIATION_DATA = [
     explain: 'Final consonant (batchim) + ㅇ (silent placeholder) → batchim sound moves over to fill it. Written form stays the same; only pronunciation changes.',
     ex1: '먹어요 → [머거요]',
     ex2: '닭이 → [달기]',
-    exception: 'Double batchim: only the second consonant links over. 닭 → 달 + ㄱ links to next vowel.'
+    exception: 'Double batchim: only the second consonant links over. 닭 → 달 + ㄱ links to next vowel.\nDouble FC (ㄲ, ㅆ) + ㅇ → both consonants carry over.\ne.g. 있어요 → [이써요] (there is), 맛있어요 → [마시써요] (is delicious).'
   },
   {
     id: 'p_r2', tag: 'B1T1', type: 'rule',
