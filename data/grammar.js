@@ -53,7 +53,7 @@ var GRAMMAR_DATA = [
   {
     id: 'g_r2b', tag: 'B1T1', type: 'rule',
     title: 'This/That (이거/그거/저거)',
-    formula: '이/그/저 + <noun> + 는/은 + <noun>이에요/예요',
+    formula: '이거/그거/저거 + 는 + <noun>이에요/예요\n이/그/저 + <noun> + 는/은 + <noun>이에요/예요',
     explain: '이거 — close to speaker.\n그거 — far from speaker, close to listener.\n저거 — far from both speaker and listener.',
     ex1: '이거는 책이에요. (This is a book.)',
     ex2: '저거는 뭐예요? (What is that over there?)',
