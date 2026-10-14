@@ -51,6 +51,7 @@ var COUNTING_DATA = [
       { kr: '벌', en: 'Clothes (Top & Bottom)' },
       { kr: '켤레', en: 'Pairs (of footwear)' },
       { kr: '대', en: 'Electronic Items / Vehicles' },
+      { kr: '쪽', en: 'Pages' },
     ],
     vocabNote: 'All counting units use Korean numerals (순우리말 수).'
   },

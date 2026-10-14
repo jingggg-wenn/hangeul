@@ -979,7 +979,10 @@ searchInput.addEventListener('input', function() {
         if (noteHay.includes(q)) found.push({ cat: cat, card: c, vocabIdx: -1 });
       } else {
         var haystack = [c.title, c.formula, c.explain, c.ex1, c.ex2, c.ex3, c.exception].filter(Boolean).join(' ').toLowerCase();
-        if (c.tableData) c.tableData.rows.forEach(function(r){ haystack += ' ' + r.join(' ').toLowerCase(); });
+        if (c.tableData) c.tableData.rows.forEach(function(r){
+          if (Array.isArray(r)) { haystack += ' ' + r.join(' ').toLowerCase(); }
+          else { haystack += ' ' + (r.cells || []).join(' ').toLowerCase() + ' ' + (r.note || '').toLowerCase(); }
+        });
         if (haystack.includes(q)) found.push({ cat: cat, card: c });
       }
     });
