@@ -271,6 +271,15 @@ var COUNTING_DATA = [
     vocabNote: 'Korean money uses Chinese numerals + 원.\nOmit 일 for the first unit: 천 (not 일천), 만 (not 일만), 백 (not 일백).\nNumbers are grouped by: 만(10,000) → 천(1,000) → 백(100) → 십(10).\n얼마예요? = How much is it?\ne.g. 482,130원 → 48만 / 2천 / 1백 / 3십 → 사십팔만 이천백삼십 원'
   },
 
+  {
+    id: 'c_m_r1', tag: 'B1T1', type: 'rule', group: 'money',
+    title: 'How Much Per/For? (에 얼마예요?)',
+    formula: '<noun> + <kor num> + <counter> + 에 얼마예요?',
+    explain: '에 means "per/for". Used to ask how much something costs for a specific quantity.',
+    ex1: '사과 세 개에 얼마예요? (How much for 3 apples?)',
+    ex2: '커피 두 잔에 얼마예요? (How much for 2 cups of coffee?)',
+  },
+
   // ── AGE ─────────────────────────────────────────────────────────────────────
   {
     id: 'c_a_v1', tag: 'pre-populated', type: 'vocab', group: 'age',

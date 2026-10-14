@@ -80,8 +80,8 @@ var VOCAB_DATA = [
     vocabData: [
       { kr: '영수증', en: 'Receipt' },
       { kr: '줄', en: 'Line / Queue' },
-      { kr: '', en: '' },
-      { kr: '', en: '' },
+      { kr: '현실적', en: 'Realistic' },
+      { kr: '공짜 / 무료', en: 'Free / No Charge' },
       { kr: '', en: '' },
       { kr: '', en: '' },
       { kr: '', en: '' },
