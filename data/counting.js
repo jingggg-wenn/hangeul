@@ -128,6 +128,17 @@ var COUNTING_DATA = [
     exception: 'For approximate durations, add 쯤: 한 시간쯤 동안 (for about one hour). 동안 can be omitted when the duration is obvious from context: 삼 년 살았어요 (I lived there for 3 years).'
   },
   {
+    id: 'c_v10', tag: 'B1T2', type: 'vocab', group: 'time-grammar',
+    title: 'Relative Time Vocabs (상대 시간)',
+    vocabData: [
+      { kr: '오늘', en: 'Today' },
+      { kr: '내일', en: 'Tomorrow' },
+      { kr: '지금', en: 'Now' },
+      { kr: '요즘', en: 'These days' },
+    ],
+    vocabNote: 'Time comes after the topic marker (은/는) and before the subject marker (이/가).\ne.g. 저는 오늘 학교에 가요. (As for me, today I go to school.)'
+  },
+  {
     id: 'c_v4', tag: 'B2T2', type: 'vocab', group: 'time-grammar',
     title: 'Time Period Units (기간 단위) - Used with Duration Marker (동안)',
     vocabData: [
