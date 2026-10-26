@@ -18,7 +18,17 @@ var PRONUNCIATION_DATA = [
     ex2: '1st Consonant:\n여덟 (eight) → [덜]\n앉다 (to sit) → [안]',
   },
   {
-    id: 'p_r3', tag: 'pre-populated', type: 'rule',
+    id: 'p_r3', tag: 'B1T2', type: 'rule',
+    title: 'ㅎ (hieut) Weakening & Aspiration',
+    formula: 'ㅎ + ㅇ → ㅎ becomes silent\nㅎ ↔ consonant (ㄱ ㄷ ㅂ ㅈ) → aspirated (ㅋ ㅌ ㅍ ㅊ)',
+    explain: 'Look at what sits next to the ㅎ. A vowel (ㅇ) means ㅎ vanishes. A stop (ㄱ ㄷ ㅂ ㅈ) means they merge into a puff.',
+    ex1: '놓아 → [노아] (ㅎ + ㅇ → silent)',
+    ex2: '좋다 → [조타] (ㅎ + ㄷ → ㅌ)',
+    ex3: '복잡하다 → [복자파다] (ㅂ + ㅎ → ㅍ)\n입학 → [이팍] (ㅂ + ㅎ → ㅍ)',
+    exception: 'How to remember: extra stroke trick — ㄱ+ㅎ=ㅋ, ㄷ+ㅎ=ㅌ, ㅂ+ㅎ=ㅍ, ㅈ+ㅎ=ㅊ. The aspirated form is the plain stop with an extra stroke.',
+  },
+  {
+    id: 'p_r4', tag: 'pre-populated', type: 'rule',
     title: 'Nasalisation (비음화)',
     formula: 'ㄱ/ㄷ/ㅂ + ㄴ/ㅁ → ㅇ/ㄴ/ㅁ',
     explain: 'Stop consonants (ㄱ ㄷ ㅂ) become the corresponding nasal sound when followed by a nasal consonant (ㄴ or ㅁ). The mouth shape stays the same but the air flows through the nose.',
@@ -27,22 +37,13 @@ var PRONUNCIATION_DATA = [
     exception: 'ㄹ also triggers nasalisation of a preceding stop: 독립 → [동닙]'
   },
   {
-    id: 'p_r4', tag: 'pre-populated', type: 'rule',
+    id: 'p_r5', tag: 'pre-populated', type: 'rule',
     title: 'Tensification (경음화)',
     formula: 'voiceless stop/ㄹ + plain consonant → tense consonant',
     explain: 'Plain consonants (ㄱ ㄷ ㅂ ㅅ ㅈ) become tense (ㄲ ㄸ ㅃ ㅆ ㅉ) when they follow a voiceless stop batchim (ㄱ ㄷ ㅂ). No aspiration, just a sharper, held sound.',
     ex1: '학교 → [학꾜]',
     ex2: '국밥 → [국빱]',
     exception: 'After ㄹ batchim, ㄷ becomes ㄸ: 발달 → [발딸]'
-  },
-  {
-    id: 'p_r5', tag: 'pre-populated', type: 'rule',
-    title: 'ㅎ Weakening & Aspiration',
-    formula: 'stop + ㅎ (or ㅎ + stop) → aspirated consonant',
-    explain: 'ㅎ as a batchim merges with a following plain stop to produce an aspirated consonant. The reverse also works. ㅎ also weakens to silence between voiced sounds.',
-    ex1: '입학 → [이팍] (ㅂ+ㅎ → ㅍ)',
-    ex2: '좋다 → [조타] (ㅎ+ㄷ → ㅌ)',
-    exception: '놓아 → [노아]: ㅎ batchim before a vowel is silent (dropped, not linked).'
   },
   {
     id: 'p_r6', tag: 'pre-populated', type: 'rule',
