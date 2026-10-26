@@ -12,7 +12,7 @@ var GRAMMAR_DATA = [
     id: 'g_r1', tag: 'B1T1', type: 'rule',
     title: 'Topic Marker (은/는)',
     formula: '<noun> + 은 (FC)\n<noun> + 는 (V)',
-    explain: 'Added to nouns (things/places/people) to indicate the topic in the sentence.',
+    explain: 'Added to nouns (things/places/people) to indicate the topic in the sentence. Usually the start of the sentence.',
     ex1: '저는 학생이에요. (As for me, I am a student.)',
     ex2: '밥은 먹었어요. (As for the rice, I ate it.)',
     exception: 'Topic ≠ subject. 저는 marks topic/contrast; 제가 marks grammatical subject (who did it).'

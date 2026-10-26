@@ -2,7 +2,7 @@
 var VOCAB_DATA = [
   {
     id: 'v_r1', tag: 'B1T1', type: 'rule', group: 'adjectives',
-    title: 'General Rule of Thumb: Verbs vs Adjectives',
+    title: 'General Rule of Thumb: Verbs vs Adjectives vs Combination Verbs',
     formula: 'To <verb> → Action Verb (동사)\nTo be <verb> → Adjective (형용사)\n<noun> + 하다 (to do) → Combination Verb',
     explain: 'Verbs are action words, adjectives are descriptive words. In Korean, both conjugate the same way. Quick tell in English: "to be ___" = adjective, "to ___" = action verb.\nCombination verb: <noun> + 하다 → turns a noun into a verb.',
     ex1: '먹다 (to eat) → Action Verb',
