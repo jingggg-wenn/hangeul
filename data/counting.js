@@ -120,7 +120,7 @@ var COUNTING_DATA = [
     exception: 'Do not use 에 with relative time words: 어제, 오늘, 내일, 매일, 매달, 매년. These function as adverbs on their own. e.g. 오늘 학교에 가요. (I go to school today.)'
   },  {
     id: 'c_r3', tag: 'B2T2', type: 'rule', group: 'time-grammar',
-    title: 'Duration Marker — For Time Period (동안)',
+    title: 'Duration Marker - For Time Period (동안)',
     formula: '<time period> + 동안 + <action verb / noun>',
     explain: 'The time duration always comes first in a sentence. 동안 means "for" or "during" a period of time. Place the time expression before 동안, then follow with the verb or action. Korean word order puts the duration at the front of the clause, not at the end like in English.',
     ex1: '두 시간 동안 공부했어요. (I studied for two hours.)',

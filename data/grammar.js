@@ -69,6 +69,15 @@ var GRAMMAR_DATA = [
     exception: 'Common sentence structure: TTPV — Topic (은/는), Time, Place, Verb.\nTime-related words are placed before the object marker.\ne.g. 저는 요즘 커피를 마셔요. (These days I drink coffee.)\n좋아하다 (to like) is an action verb → takes 을/를.\n좋다 (to be good) is an adjective → takes 이/가.'
   },
   {
+    id: 'g_r3b', tag: 'B1T2', type: 'rule',
+    title: 'Place Marker - To (에)',
+    formula: '<place noun> + 에 + 가요/와요',
+    explain: 'Attached to a place noun to indicate where one is going to or coming to.',
+    ex1: '저는 학교에 가요. (I go to school.)',
+    ex2: '저는 집에 와요. (I come home.)',
+    exception: 'TTPV — time words are placed before the place marker.\ne.g. 저는 오늘 옷가게에 가요. (Today I go to the clothes shop.)\nQuestion: 어디에 가요/와요?',
+  },
+  {
     id: 'g_r4', tag: 'pre-populated', type: 'rule',
     title: 'V/A Present Tense (아/어/해요)',
     formula: 'verb stem + 아요 (after bright V) / 어요 (after dark V)',
