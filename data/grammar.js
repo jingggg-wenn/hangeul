@@ -60,17 +60,17 @@ var GRAMMAR_DATA = [
     exception: 'Question: 이거/그거/저거는 뭐예요? (What is this/that?)',
   },
   {
-    id: 'g_r3', tag: 'pre-populated', type: 'rule',
-    title: 'Object Particle (을/를)',
-    formula: 'Noun + 을 (after FC) / 를 (after V)',
-    explain: 'Marks the direct object — what is being acted on. Korean is SOV (subject-object-verb), so the object comes before the verb.',
-    ex1: '책을 읽어요. (I read a book.)',
-    ex2: '커피를 마셔요. (I drink coffee.)',
-    exception: 'Frequently dropped in casual speech. Certain verbs take 을/를 where English uses "at", "to", etc.: 학교를 가다 (go to school).'
+    id: 'g_r3', tag: 'B1T2', type: 'rule',
+    title: 'Object Marker (을/를)',
+    formula: '<noun> + 을 (FC) + <action verb>\n<noun> + 를 (V) + <action verb>',
+    explain: 'Attached with nouns to indicate that certain action is being performed.',
+    ex1: '저는 책을 읽어요. (I read a book.)',
+    ex2: '저는 커피를 마셔요. (I drink coffee.)',
+    exception: 'Common sentence structure: TTPV — Topic (은/는), Time, Place, Verb.\nTime-related words are placed before the object marker.\ne.g. 저는 요즘 커피를 마셔요. (These days I drink coffee.)\n좋아하다 (to like) is an action verb → takes 을/를.\n좋다 (to be good) is an adjective → takes 이/가.'
   },
   {
     id: 'g_r4', tag: 'pre-populated', type: 'rule',
-    title: 'Present Tense Polite (아/어요)',
+    title: 'V/A Present Tense (아/어/해요)',
     formula: 'verb stem + 아요 (after bright V) / 어요 (after dark V)',
     explain: 'Drop 다 from dictionary form. If the last vowel in the stem is ㅏ or ㅗ, add 아요. All other vowels: add 어요. 하다 verbs use 해요. This is the everyday polite speech level (해요체).',
     ex1: '먹다 → 먹 + 어요 → 먹어요',
