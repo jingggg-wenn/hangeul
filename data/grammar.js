@@ -35,11 +35,20 @@ var GRAMMAR_DATA = [
   },
   {
     id: 'g_r0d', tag: 'B1T1', type: 'rule',
-    title: 'And — Connect 2 Nouns (하고)',
+    title: 'And - Connect 2 Nouns (하고)',
     formula: '<noun1> + 하고 + <noun2>',
     explain: '하고 connects two nouns, meaning "and" or "with". Used in casual/spoken Korean.\nFormal: 와 (V) / 과 (FC). e.g. 커피와 빵 (coffee and bread).',
     ex1: '커피하고 빵 주세요. (Coffee and bread please.)',
     ex2: '빵 다섯 개하고 우유 네 잔 주세요. (Please give me 5 bread and 4 glasses of milk.)',
+  },
+  {
+    id: 'g_r0e', tag: 'B1T2', type: 'rule',
+    title: 'And - Connect 2 Sentences (그리고)',
+    formula: '<sentence 1>. 그리고 <sentence 2>.',
+    explain: '그리고 connects two full sentences, meaning "and" or "and then". Used at the start of the second sentence. Topic marker in the 2nd sentence can typically be dropped as it is obvious to the listener.',
+    ex1: '저는 커피를 마셔요. 그리고 빵을 먹어요. (I drink coffee. And I eat bread.)',
+    ex2: '한국어를 공부해요. 그리고 재미있어요. (I study Korean. And it is fun.)',
+    exception: 'Shortcut: drop 그리고, change 1st sentence V/A to dictionary form + 고.\ne.g. 커피를 마시고 빵을 먹어요. (I drink coffee and eat bread.)\n한국어를 공부하고 재미있어요. (I study Korean and it is fun.)',
   },
   {
     id: 'g_r2', tag: 'B1T1', type: 'rule',
@@ -75,7 +84,16 @@ var GRAMMAR_DATA = [
     explain: 'Attached to a place noun to indicate where one is going to or coming to.',
     ex1: '저는 학교에 가요. (I go to school.)',
     ex2: '저는 집에 와요. (I come home.)',
-    exception: 'TTPV — time words are placed before the place marker.\ne.g. 저는 오늘 옷가게에 가요. (Today I go to the clothes shop.)\nQuestion: 어디에 가요/와요?',
+    exception: 'Base forms: 가다 (to go), 오다 (to come).\nTTPV — time words are placed before the place marker.\ne.g. 저는 오늘 옷가게에 가요. (Today I go to the clothes shop.)\nQuestion: 어디에 가요/와요?',
+  },
+  {
+    id: 'g_r7', tag: 'B1T2', type: 'rule',
+    title: 'Negation - Not/Don\'t (안)',
+    formula: '안 + <V/A>\n<noun> + 안 + <verb> (combination verbs)',
+    explain: '안 is a negation adverb. An adverb adds detail to a verb, adjective, or another adverb — it answers how, how much, when, or whether.',
+    ex1: '안 먹어요. (I don\'t eat.)',
+    ex2: '안 예뻐요. (It\'s not pretty.)',
+    exception: 'Combination verbs: 안 is placed in front of the verb (하다), not the noun.\ne.g. 공부 안 해요 (not 안 공부해요).\n있다 (there is) ↔ 없다 (there isn\'t) — 없다 is already negative, no 안 needed.'
   },
   {
     id: 'g_r4', tag: 'pre-populated', type: 'rule',
@@ -103,15 +121,6 @@ var GRAMMAR_DATA = [
     ex1: '먹다 → 먹을 거예요 (I will eat)',
     ex2: '가다 → 갈 거예요 (I will go)',
     exception: 'ㄹ-stem verbs drop the ㄹ before adding ㄹ 거예요: 알다 → 알 거예요 (no double ㄹ).'
-  },
-  {
-    id: 'g_r7', tag: 'pre-populated', type: 'rule',
-    title: 'Negation — Short Form (안)',
-    formula: '안 + verb / 안 + adjective',
-    explain: '안 is placed directly before the verb or adjective to negate it. Simple and common in spoken Korean.',
-    ex1: '안 먹어요. (I don\'t eat / I\'m not eating.)',
-    ex2: '안 예뻐요. (It\'s not pretty.)',
-    exception: '하다 verbs: 공부 안 해요 (NOT 안 공부해요). The 안 splits the noun and 하다.'
   },
   {
     id: 'g_r8', tag: 'pre-populated', type: 'rule',
