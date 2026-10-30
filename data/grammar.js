@@ -43,12 +43,12 @@ var GRAMMAR_DATA = [
   },
   {
     id: 'g_r0e', tag: 'B1T2', type: 'rule',
-    title: 'And - Connect 2 Sentences (그리고)',
-    formula: '<sentence 1>. 그리고 <sentence 2>.',
+    title: 'And - Connect 2 Sentences (그리고/고)',
+    formula: '<sentence 1>. 그리고 <sentence 2>.\n<1st sentence verb stem> + 고 + <2nd sentence verb>',
     explain: '그리고 connects two full sentences, meaning "and" or "and then". Used at the start of the second sentence. Topic marker in the 2nd sentence can typically be dropped as it is obvious to the listener.',
     ex1: '저는 커피를 마셔요. 그리고 빵을 먹어요. (I drink coffee. And I eat bread.)',
-    ex2: '한국어를 공부해요. 그리고 재미있어요. (I study Korean. And it is fun.)',
-    exception: 'Shortcut: drop 그리고, change 1st sentence V/A to dictionary form + 고.\ne.g. 커피를 마시고 빵을 먹어요. (I drink coffee and eat bread.)\n한국어를 공부하고 재미있어요. (I study Korean and it is fun.)',
+    ex2: '커피를 마시고 빵을 먹어요. (I drink coffee and eat bread.)\n한국어를 공부하고 재미있어요. (I study Korean and it is fun.)',
+    exception: 'Shortcut: drop 그리고, change 1st sentence V/A to dictionary form + 고.',
   },
   {
     id: 'g_r2', tag: 'B1T1', type: 'rule',
@@ -130,15 +130,6 @@ var GRAMMAR_DATA = [
     ex1: '먹지 않아요. (I do not eat.)',
     ex2: '좋지 않아요. (It is not good.)',
     exception: 'In formal writing, -지 않습니다. Past: -지 않았어요. Future: -지 않을 거예요.'
-  },
-  {
-    id: 'g_r9', tag: 'pre-populated', type: 'rule',
-    title: 'Connective — And / Then (-고)',
-    formula: 'verb stem + 고',
-    explain: 'Connects two actions or states, meaning "and" or "and then". The tense is only marked on the final verb. Both clauses share the same subject unless stated otherwise.',
-    ex1: '밥을 먹고 잤어요. (I ate and then slept.)',
-    ex2: '크고 예뻐요. (It\'s big and pretty.)',
-    exception: '-고 나서 emphasises sequence more strongly: 먹고 나서 갔어요 (after eating, went).'
   },
   {
     id: 'g_r10', tag: 'pre-populated', type: 'rule',
