@@ -96,13 +96,13 @@ var GRAMMAR_DATA = [
     exception: 'Combination verbs: 안 is placed in front of the verb (하다), not the noun.\ne.g. 공부 안 해요 (not 안 공부해요).\n있다 (there is) ↔ 없다 (there isn\'t) — 없다 is already negative, no 안 needed.'
   },
   {
-    id: 'g_r4', tag: 'pre-populated', type: 'rule',
+    id: 'g_r4', tag: 'B1T2', type: 'rule',
     title: 'V/A Present Tense (아/어/해요)',
-    formula: 'verb stem + 아요 (after bright V) / 어요 (after dark V)',
+    formula: 'V/A~다~ + 아요 (when ㅗ/ㅏ)\nV/A~다~ + 어요 (when not ㅗ/ㅏ)\nV/A~하다~ → 해요',
     explain: 'Drop 다 from dictionary form. If the last vowel in the stem is ㅏ or ㅗ, add 아요. All other vowels: add 어요. 하다 verbs use 해요. This is the everyday polite speech level (해요체).',
-    ex1: '먹다 → 먹 + 어요 → 먹어요',
-    ex2: '가다 → 가 + 아요 → 가요 (contracts)',
-    exception: '하다 → 해요. Contraction happens when stem ends in ㅏ/ㅓ: 가아요 → 가요, 서어요 → 서요.'
+    ex1: '먹다 → 먹어요 (FC)\n오다 → 와요 (+어요 & contracts) \n마시다 → 마셔요 (+어요 & contracts)',
+    ex2: '쉬다 → 쉬어요 (+어요 & does not contract as combined vowel)\n쉽다 → 쉬워요 (ㅂ irregular + 어요)',
+    exception: 'When there is a batchim (FC), it does not contract. \nIrregularities apply: ㄷ / ㅂ / ㅡ / ㄹ.',
   },
   {
     id: 'g_r5', tag: 'pre-populated', type: 'rule',
