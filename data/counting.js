@@ -129,14 +129,34 @@ var COUNTING_DATA = [
   },
   {
     id: 'c_v10', tag: 'B1T2', type: 'vocab', group: 'time-grammar',
-    title: 'Relative Time Vocabs (상대 시간)',
+    title: 'Day-to-Day Time Vocabs (하루 시간대) - 에 Applies',
     vocabData: [
+      { kr: '아침', en: 'Morning / Breakfast' },
+      { kr: '낮', en: 'Afternoon / Daytime' },
+      { kr: '점심', en: 'Lunch' },
+      { kr: '저녁', en: 'Evening / Dinner' },
+      { kr: '새벽', en: 'Dawn' },
+      { kr: '밤', en: 'Night' },
+      { kr: '오전', en: 'Morning (AM)' },
+      { kr: '오후', en: 'Afternoon (PM)' },
+      { kr: '평일', en: 'Weekday' },
+    ],
+    vocabNote: 'Time marker 에 applies when saying when something happens.\ne.g. 아침에 일어나요. (I wake up in the morning.) 오후에 공부해요. (I study in the afternoon.)\nT.T.P.V sentence structure'
+  },
+  {
+    id: 'c_v11', tag: 'B1T2', type: 'vocab', group: 'time-grammar',
+    title: 'Relative Time Vocabs (상대 시간) - 에 Does Not Apply',
+    vocabData: [
+      { kr: '어제', en: 'Yesterday' },
       { kr: '오늘', en: 'Today' },
       { kr: '내일', en: 'Tomorrow' },
       { kr: '지금', en: 'Now' },
       { kr: '요즘', en: 'These days' },
+      { kr: '매년', en: 'Every year' },
+      { kr: '매달', en: 'Every month' },
+      { kr: '매일', en: 'Every day' },
     ],
-    vocabNote: 'Time comes after the topic marker (은/는) and before the subject marker (이/가).\ne.g. 저는 오늘 학교에 가요. (As for me, today I go to school.)'
+    vocabNote: 'These words do not need the time marker 에. Relative time vocabs are time adverbs on their own.\n에 marks a point or slot in time (e.g. 3시에, 월요일에, 아침에) — not used with these words.\ne.g. 오늘 학교에 가요. (I go to school today.) 매일 운동해요. (I exercise every day.)'
   },
   {
     id: 'c_v4', tag: 'B2T2', type: 'vocab', group: 'time-grammar',
@@ -252,19 +272,6 @@ var COUNTING_DATA = [
     ex1: '오늘은 칠월 십일일이에요. (Today is July 11th.)',
     ex2: '생일이 삼월 이십오일이에요. (My birthday is March 25th.)',
     exception: 'Remember: 6월 = 유월, 10월 = 시월 (irregular). When asking: 며칠이에요? (What date is it?) or 몇 월 며칠이에요? (What month and date is it?)'
-  },
-  {
-    id: 'c_v10', tag: 'B1T2', type: 'vocab', group: 'months-seasons',
-    title: 'Relative Time Words (시간 표현)',
-    vocabData: [
-      { kr: '어제', en: 'Yesterday' },
-      { kr: '오늘', en: 'Today' },
-      { kr: '내일', en: 'Tomorrow' },
-      { kr: '매년', en: 'Every year' },
-      { kr: '매달', en: 'Every month' },
-      { kr: '매일', en: 'Every day' },
-    ],
-    vocabNote: 'These words do not need the time marker 에. They function as time adverbs on their own.\ne.g. 오늘 학교에 가요. (I go to school today.) 매일 운동해요. (I exercise every day.)'
   },
   // ── MONEY ───────────────────────────────────────────────────────────────────
   {
