@@ -668,25 +668,9 @@ var SEED = {
   irregular:     (typeof IRREGULAR_DATA   !== 'undefined') ? IRREGULAR_DATA   : [],
 };
 
-// ── DATA / PERSISTENCE ────────────────────────────────────────────────────────
-function load() {
-  try {
-    var d = JSON.parse(localStorage.getItem('krlearn_vA') || 'null');
-    if (d) {
-      // Fill in any categories that didn't exist when localStorage was last saved
-      ALL_CATS.forEach(function(cat) {
-        if (!d[cat]) d[cat] = JSON.parse(JSON.stringify(SEED[cat] || []));
-      });
-      return d;
-    }
-    return JSON.parse(JSON.stringify(SEED));
-  } catch(e) { return JSON.parse(JSON.stringify(SEED)); }
-}
-function save(d) {
-  try { localStorage.setItem('krlearn_vA', JSON.stringify(d)); } catch(e) {}
-}
-
-var data = load();
+// ── DATA ─────────────────────────────────────────────────────────────────────
+// Card content is maintained in data/*.js; always use the current files.
+var data = JSON.parse(JSON.stringify(SEED));
 var currentCat = 'hangeul';
 
 // ── RENDER ────────────────────────────────────────────────────────────────────

@@ -251,7 +251,7 @@ var COUNTING_DATA = [
     vocabNote: 'Days use Sino-Korean numbers + 일. Pattern: number + 일. e.g. 십오일 = 15th, 이십삼일 = 23rd.'
   },
   {
-    id: 'c_v9', tag: 'B1T2', type: 'vocab', group: 'months-seasons',
+    id: 'c_v12', tag: 'B1T2', type: 'vocab', group: 'months-seasons',
     title: 'Days of the Week (요일)',
     vocabData: [
       { kr: '월요일', en: 'Monday', origin: '月 Moon' },
